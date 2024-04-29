@@ -1,12 +1,15 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import './App.css';
 import { Suspense, lazy, useEffect } from 'react';
 import PrivateRoute from './routes/PrivateRoute';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './configs/firebase';
 import { useAppDispatch } from './redux/hook';
 import { clearUser, getUserByIdAsync } from './redux/reducers/userSlice';
+
+import './App.css';
+import './styles/_all.css';
+import Popup from './components/Popup';
 
 const Home = lazy(() => import('./components/pages/Home'));
 const Login = lazy(() => import('./components/pages/Login'));
@@ -16,11 +19,13 @@ const Schedule = lazy(() => import('./components/pages/Schedule'));
 const RequirementList = lazy(() => import('./components/pages/RequirementList'));
 const UserList = lazy(() => import('./components/pages/UserList'));
 const RequirementDetail = lazy(() => import('./components/pages/RequirementDetail'));
+const AddRequirement = lazy(() => import('./components/pages/AddRequirement'));
 
 function App() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    console.log('%cVTV - APP ', 'color: #0F9548; font-size: 32px; font-weight: bold; padding: 20px 0;');
     // Như là người quan sát trạng thái của user có đăng nhập hay đăng xuất không
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -40,6 +45,7 @@ function App() {
           <Route path="/dang-nhap" element={<Login />} />
           <Route path="/yeu-cau-cua-toi" element={<MyRequirements />} />
           <Route path="/lich-trinh" element={<Schedule />} />
+          <Route path="/tao-yeu-cau-moi" element={<AddRequirement />} />
 
           <Route path="*" element={<div>Not found</div>} />
 
@@ -69,6 +75,7 @@ function App() {
           />
         </Routes>
       </Router>
+      <Popup />
     </Suspense>
   );
 }

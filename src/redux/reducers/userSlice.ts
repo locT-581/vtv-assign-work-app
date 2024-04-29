@@ -5,13 +5,11 @@ import { getUserById } from '../../apis/userAPI';
 interface InitState {
   loading?: boolean;
   user?: User | null;
-  isShowPopup: boolean;
   error: string;
 }
 
 const initialState: InitState = {
   user: null,
-  isShowPopup: false,
   error: '',
 };
 
@@ -30,9 +28,7 @@ const userSlice = createSlice({
     setUser: (state, action: PayloadAction<User>) => {
       state.user = action.payload;
     },
-    switchPopup: (state, action: PayloadAction<boolean>) => {
-      state.isShowPopup = action.payload;
-    },
+
     updateError: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
     },
@@ -57,5 +53,5 @@ const userSlice = createSlice({
 });
 
 const { actions, reducer } = userSlice;
-export const { switchPopup, updateError, clearError, clearUser } = actions;
+export const { updateError, clearError, clearUser } = actions;
 export default reducer;

@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #2d3581;
+}
+
+* {
+  font-family: 'Montserrat', sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  box-sizing: border-box;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.logosidebar {
+  height: 32px;
+}
+
+.logo-placeholder {
+  padding-bottom: 72px;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 387px;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: #ffffff;
+  border-radius: 0 48px 48px 0;
+}
+
+.sidebarinside {
+  margin: 44px 64px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sidebar h1 {
+  font-weight: 700;
+  font-size: clamp(32px, 5vw, 64px);
+  color: #2d3581;
+  margin: 0%;
+}
+
+.sidebar h2 {
+  font-weight: 500;
+  font-size: clamp(24px, 3vw, 48px);
+  color: #2d3581;
+  margin: 0%;
+}
+
+.sidebar h6 {
+  font-weight: 200;
+  font-size: 12px;
+  color: #000000;
+  margin: 0%;
+  text-align: center;
+  margin-top: 24px;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  padding: 21px 0;
+  color: #2d3581;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.sidebar li i {
+  margin-right: 16px;
+}
+
+.sidebar ul li:hover {
+  color: #0f9548;
+}
+
+Link {
+  padding: 21px 0;
+  color: #2d3581;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.title {
+  margin-bottom: 72px;
+  display: flex;
+  flex-direction: column;
+}
+
+.logout-button {
+  text-align: center;
+  margin-top: auto;
+}
+
+button {
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 600;
+  color: white;
+  background-color: #2d3581;
+  padding: 8px 24px;
+  border-radius: 24px;
+  border: none;
+  outline: none;
+}
+
+button:hover {
+  background-color: #0f9548;
+}
+
+.LoginPage {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-image: url('../src/img/BG-TD.jpg');
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+.Login {
+  width: 32%;
+  height: 44%;
+}
+
+.Card {
+  margin-top: 32px;
+  background-color: #ffffff;
+  padding: 8%;
+  border-radius: 48px;
+  box-shadow: 0px 4px 12px 4px #d2d2d2;
+}
+
+.Card legend {
+  color: #2d3581;
+  font-weight: 600;
+  font-size: 36px;
+}
+
+.Card p {
+  color: #999999;
+  font-size: 16px;
+}
+
+.inputLogin {
+  display: flex;
+  flex-direction: column;
+}
+
+.input input {
+  border: 0px;
+  outline: none;
+  padding: 16px 8px;
+  width: 100%;
+  line-height: 1;
+  display: flex;
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0px 12px;
+  margin: 12px 0;
+  border-radius: 12px;
+  border: 1px solid #999999;
+  color: #999999;
+  outline-color: #2d3581;
+}
+
+.seclect-box {
+  border: none;
+  appearance: none;
+  padding: 16px 8px;
+}
+select {
+  border: 0px;
+  outline: none;
+  padding: 16px 8px;
+  width: 100%;
+  line-height: 1;
+  display: flex;
+  color: #999999;
+}
+
+.select-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0px 12px;
+  margin: 12px 0;
+  border-radius: 12px;
+  border: 1px solid #999999;
+  color: #999999;
+  outline-color: #2d3581;
+}
+
+section {
+  display: flex;
+}
+
+.adduser {
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 48px;
+}
+
+.adduser .input {
+  margin: 12px 0;
+}
+
+.mainScreen {
+  width: 100%;
+  padding: 44px 64px;
+}

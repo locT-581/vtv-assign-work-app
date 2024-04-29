@@ -1,14 +1,12 @@
-import * as React from 'react';
+import AdminWidget from '../../AdminWidget';
+import DefaultLayout from '../../layouts/DefaultLayout';
 
-export interface IAdminHomeProps {
-}
+export interface IAdminHomeProps {}
 
-export default function AdminHome (props: IAdminHomeProps) {
+export default function AdminHome() {
   return (
-    <div>
-      AdminHome
-
-
-    </div>
+    <DefaultLayout>
+      <AdminWidget></AdminWidget>
+    </DefaultLayout>
   );
 }

@@ -3,6 +3,15 @@ import rootReducer from './reducers';
 
 export const store = configureStore({
   reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        // Ignore these action types
+        ignoredActions: ['common/switchPopup'],
+        // Ignore these paths in the state
+        ignoredPaths: ['commonSlice.popupElement'],
+      },
+    }),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

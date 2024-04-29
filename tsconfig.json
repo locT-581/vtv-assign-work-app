@@ -19,6 +19,17 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
+    "paths": {
+      "components/*": ["./src/components/*"],
+      "gateway/*": ["./src/gateway/*"],
+      "hooks/*": ["./src/hooks/*"],
+      "providers/*": ["./src/providers/*"],
+      "utils/*": ["./src/utils/*"],
+      "types/*": ["./src/types/*"],
+      "store/*": ["./src/store/*"],
+      "validation-schemas/*": ["./src/validation-schemas/*"]
+    },
 
     "types": ["vite/client"]
   },
