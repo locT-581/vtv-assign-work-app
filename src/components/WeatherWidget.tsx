@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { IoSunnySharp } from 'react-icons/io5';
+import { IoSunny, IoCloudSharp, IoRainy } from 'react-icons/io5';
+import { BsCloudSunFill } from "react-icons/bs";
+import { TbMist } from "react-icons/tb";
 import { RiWindyFill, RiLoader2Fill } from 'react-icons/ri';
 import { TbDropletHalf2Filled } from 'react-icons/tb';
 
@@ -20,6 +22,41 @@ interface WeatherDataProps {
     speed: number;
   };
 }
+
+const iconChanger = (weather: string) => {
+  let iconElement: React.ReactNode;
+  let iconColor: string;
+
+  switch (weather) {
+    case "Rain":
+      iconElement = <IoRainy />;
+      iconColor = "#ffffff";
+      break;
+
+    case "Clear":
+      iconElement = <IoSunny />;
+      iconColor = "#ffffff";
+      break;
+    case "Clouds":
+      iconElement = <IoCloudSharp />;
+      iconColor = "#ffffff";
+      break;
+
+    case "Mist":
+      iconElement = <TbMist />;
+      iconColor = "#ffffff";
+      break;
+    default:
+      iconElement = <BsCloudSunFill />;
+      iconColor = "#ffffff";
+  }
+
+  return (
+    <span className="icon" style={{ color: iconColor }}>
+      {iconElement}
+    </span>
+  );
+};
 
 const WeatherWidget: React.FC = () => {
   const [weatherData, setWeatherData] = useState<WeatherDataProps | null>(null);
@@ -42,6 +79,8 @@ const WeatherWidget: React.FC = () => {
         setLoading(false);
       });
     });
+    
+
   }, []);
 
   return (
@@ -54,7 +93,7 @@ const WeatherWidget: React.FC = () => {
         weatherData && (
           <div className="flex w-[60%] h-full">
             <div className="w-[40%] flex items-center justify-center">
-              <IoSunnySharp className="text-9xl" />
+              <div className="text-9xl"> {iconChanger(weatherData.weather[0].main)}</div>
             </div>
             <div className="flex flex-col w-[60%] h-full justify-between">
               <div className="w-full font-semibold h-[70%]">
@@ -85,7 +124,7 @@ const WeatherWidget: React.FC = () => {
               <p>Gió</p>
             </div>
             <div className="flex justify-center">
-              <p className="text-6xl">{weatherData.wind.speed}</p>
+              <p className="text-6xl">{weatherData.wind.speed.toFixed(1)}</p>
               <p className="text-l justify-end">km/h</p>
             </div>
           </div>
