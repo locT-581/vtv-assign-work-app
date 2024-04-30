@@ -51,20 +51,6 @@ ul {
   justify-content: space-between;
 }
 
-.sidebar h1 {
-  font-weight: 700;
-  font-size: clamp(32px, 5vw, 64px);
-  color: #2d3581;
-  margin: 0%;
-}
-
-.sidebar h2 {
-  font-weight: 500;
-  font-size: clamp(24px, 3vw, 48px);
-  color: #2d3581;
-  margin: 0%;
-}
-
 .sidebar h6 {
   font-weight: 200;
   font-size: 12px;
@@ -156,16 +142,6 @@ button:hover {
   box-shadow: 0px 4px 12px 4px #d2d2d2;
 }
 
-.Card legend {
-  color: #2d3581;
-  font-weight: 600;
-  font-size: 36px;
-}
-
-.Card p {
-  color: #999999;
-  font-size: 16px;
-}
 
 .inputLogin {
   display: flex;
