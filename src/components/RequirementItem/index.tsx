@@ -13,7 +13,7 @@ export interface IRequirementItemProps {
 
 export default function RequirementItem(props: IRequirementItemProps) {
   return (
-    <div className="cursor-pointer flex flex-col max-w-[350px] w-full gap-1 rounded-lg bg-[#F5F5F5] p-4 text-black">
+    <div className="cursor-pointer flex flex-col w-full gap-1 rounded-lg bg-[#F5F5F5] p-4 text-black">
       <h2 className="text-black text-base font-semibold">{props.title}</h2>
       <div className="flex gap-1 items-center">
         <img src={props.avatar} alt="" className="w-5 h-5 rounded-full" />

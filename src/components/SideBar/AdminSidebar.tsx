@@ -4,6 +4,8 @@ import { logout } from '../../apis/userAPI';
 import getIcon from '../../utils/getIcon';
 import { useAppSelector } from '../../redux/hook';
 
+import { FaUserAlt, FaCheckCircle, FaRegCalendarCheck } from 'react-icons/fa';
+
 export default function AdminSideBar() {
   const navigate = useNavigate();
   const { user } = useAppSelector((state) => state.userSlice);
@@ -17,21 +19,28 @@ export default function AdminSideBar() {
       .catch((error) => console.log(error));
   };
   return (
-    <div className="sidebar">
+    <div className="sidebar w-1/4">
       <div className="sidebarinside">
         <div className="logo-placeholder">
           <img src={getIcon('logoVTV')} alt="logo" className="logosidebar" />
         </div>
-        <div className="title">
-          <h2>Xin Chào</h2>
-          <h1>{user?.fullName?.split(' ')[user?.fullName?.split(' ').length - 1]}</h1>
+        <div className="title text-vtv-blue">
+          <p className="text-3xl font-medium">Xin Chào,</p>
+          <p className="text-7xl font-bold">{user?.fullName.split(' ')[user?.fullName.split(' ').length - 1]}</p>
         </div>
         <ul>
-          <li>
-            <Link to="/them-nguoi-dung">Thêm người dùng</Link>
+          <li className="flex justify-start items-center">
+            <FaUserAlt className="mr-2" />
+            <Link to="/">Quản lý người dùng</Link>
           </li>
-          <li>Menu Item 2</li>
-          <li>Menu Item 3</li>
+          <li className="flex justify-start items-center">
+            <FaCheckCircle className="mr-2" />
+            <Link to="/">Yêu cầu sắp tới</Link>
+          </li>
+          <li className="flex justify-start items-center">
+            <FaRegCalendarCheck className="mr-2" />
+            <Link to="/">Lịch trình</Link>
+          </li>
         </ul>
         <div className="logout-button">
           <button onClick={handleSignOut}>Đăng xuất</button>

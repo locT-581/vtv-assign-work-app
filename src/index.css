@@ -1,8 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -15,16 +16,16 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
+} */
 
-a {
+/* a {
   font-weight: 500;
   color: #646cff;
   text-decoration: inherit;
 }
 a:hover {
   color: #535bf2;
-}
+} */
 
 body {
   margin: 0;
@@ -58,7 +59,7 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
@@ -69,19 +70,49 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} */
 
 @layer base {
   ::-webkit-scrollbar {
     @apply w-0;
   }
-  ::-webkit-scrollbar-track {
-    @apply bg-transparent;
-  }
-  ::-webkit-scrollbar-thumb {
-    @apply bg-transparent rounded-full;
-  }
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-thumb,
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-transparent;
+    background: transparent;
   }
+}
+
+button {
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 600;
+  color: white;
+  background-color: #2d3581;
+  padding: 8px 24px;
+  border-radius: 24px;
+  border: none;
+  outline: none;
+}
+
+button:hover {
+  background-color: #0f9548;
+}
+
+.slider {
+  position: relative;
+  width: 100%; /* Đảm bảo slider có chiều rộng 100% của phần tử cha */
+  height: auto; /* Chiều cao tự động điều chỉnh tùy thuộc vào chiều cao của hình ảnh */
+}
+
+.slide {
+  width: 100%; /* Đảm bảo mỗi slide có chiều rộng bằng với slider */
+  height: auto; /* Chiều cao tự động điều chỉnh tùy thuộc vào chiều cao của hình ảnh */
+  overflow: hidden; /* Ẩn phần tràn ra ngoài của hình ảnh */
+}
+
+.slide img {
+  width: 100%; /* Đảm bảo ảnh đầy đủ chiều rộng của slide */
+  height: auto; /* Chiều cao tự động điều chỉnh tùy thuộc vào tỷ lệ khung hình */
+  object-fit: cover; /* Ẩn phần tràn ra ngoài của ảnh và giữ nguyên tỷ lệ khung hình */
 }

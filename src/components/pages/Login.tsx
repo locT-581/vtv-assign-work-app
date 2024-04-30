@@ -24,13 +24,13 @@ export default function Login() {
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.target.value);
 
   return (
-    <section className="LoginPage">
-      <div className="justify-center flex flex-col">
+    <div className="bg-cover h-screen w-screen items-center justify-center flex" style={{ backgroundImage: "url('/src/assets/img/BG-TD.jpg')" }}>
+      <div className="justify-center flex flex-col text-center  w-1/4">
         <img src={getIcon('logoVTV')} alt="logo" className=" h-24 px-4" />
         <form>
-          <div className="Card">
-            <legend>Chào mừng!</legend>
-            <p>Phần mềm chấm công tác của đài truyền hình VTV</p>
+          <div className="Card w-full p-8 mt-6">
+            <p className="text-4xl font-semibold text-3xl text-vtv-blue">Chào mừng!</p>
+            <p className="text-base">Phần mềm chấm công tác của đài truyền hình VTV</p>
             <div className="inputLogin">
               <div className="input">
                 <FaEnvelope />
@@ -50,7 +50,7 @@ export default function Login() {
             <button type="button" onClick={handleSignIn} style={{ marginTop: '26px' }}>
               Đăng nhập
             </button>
-            <button
+            {/* <button
               type="button"
               onClick={() => {
                 signOut(auth).then((res) => {
@@ -60,10 +60,10 @@ export default function Login() {
               style={{ marginTop: '26px' }}
             >
               Đăng xuất
-            </button>
+            </button> */}
           </div>
         </form>
       </div>
-    </section>
+    </div>
   );
 }
