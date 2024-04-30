@@ -104,3 +104,21 @@ button {
 button:hover {
   background-color: #0f9548;
 }
+
+.slider {
+  position: relative;
+  width: 100%; /* Đảm bảo slider có chiều rộng 100% của phần tử cha */
+  height: auto; /* Chiều cao tự động điều chỉnh tùy thuộc vào chiều cao của hình ảnh */
+}
+
+.slide {
+  width: 100%; /* Đảm bảo mỗi slide có chiều rộng bằng với slider */
+  height: auto; /* Chiều cao tự động điều chỉnh tùy thuộc vào chiều cao của hình ảnh */
+  overflow: hidden; /* Ẩn phần tràn ra ngoài của hình ảnh */
+}
+
+.slide img {
+  width: 100%; /* Đảm bảo ảnh đầy đủ chiều rộng của slide */
+  height: auto; /* Chiều cao tự động điều chỉnh tùy thuộc vào tỷ lệ khung hình */
+  object-fit: cover; /* Ẩn phần tràn ra ngoài của ảnh và giữ nguyên tỷ lệ khung hình */
+}
