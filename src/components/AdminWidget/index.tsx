@@ -8,7 +8,7 @@ import Schedule from '../pages/Schedule';
 const AdminWidget = () => {
   return (
     <div className="h-full">
-      <div className="grid h-full grid-cols-6 grid-rows-5 gap-4">
+      <div className="grid h-full grid-cols-6 grid-rows-5 gap">
         <div className="row-span-1 col-span-1">
           <ClockWidget />
         </div>
