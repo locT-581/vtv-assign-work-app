@@ -24,7 +24,7 @@ export default function AdminSideBar() {
         </div>
         <div className="title">
           <h2>Xin Chào</h2>
-          <h1>{user?.fullName.split(' ')[user?.fullName.split(' ').length - 1]}</h1>
+          <h1>{user?.fullName?.split(' ')[user?.fullName?.split(' ').length - 1]}</h1>
         </div>
         <ul>
           <li>

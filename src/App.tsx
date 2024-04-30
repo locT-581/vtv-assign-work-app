@@ -29,9 +29,13 @@ function App() {
     // Như là người quan sát trạng thái của user có đăng nhập hay đăng xuất không
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log('User is signed in');
+        console.group('User is signed in');
+        console.log(user);
+        console.groupEnd();
+
         dispatch(getUserByIdAsync(user.uid));
       } else {
+        console.log('User is signed out');
         dispatch(clearUser());
       }
     });

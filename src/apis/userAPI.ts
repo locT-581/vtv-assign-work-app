@@ -149,5 +149,8 @@ export const getAllSupportTeams = async (): Promise<SupportTeams[]> => {
  * @param requirement - requirement
  * @returns {Promise} - Promise<DocumentData>
  */
-export const createRequirement = async (requirement: Requirement): Promise<DocumentData> =>
-  await addDoc(collection(db, 'requirements'), requirement);
+export const createRequirement = async (requirement: Requirement): Promise<DocumentData> => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { id, ...rest } = requirement;
+  return await addDoc(collection(db, 'requirements'), rest);
+};

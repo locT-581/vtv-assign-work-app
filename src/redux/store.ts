@@ -9,7 +9,7 @@ export const store = configureStore({
         // Ignore these action types
         ignoredActions: ['common/switchPopup'],
         // Ignore these paths in the state
-        ignoredPaths: ['commonSlice.popupElement'],
+        ignoredPaths: ['commonSlice.popupElement', 'requirementSlice.requirements'],
       },
     }),
 });

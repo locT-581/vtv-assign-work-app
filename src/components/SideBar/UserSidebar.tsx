@@ -13,7 +13,7 @@ const UserSidebar = () => {
     logout()
       .then(() => {
         console.log('Sign Out');
-        navigate('/');
+        navigate('/dang-nhap');
       })
       .catch((error) => console.log(error));
   };
@@ -24,9 +24,9 @@ const UserSidebar = () => {
         <div className="logo-placeholder">
           <img src={getIcon('logoVTV')} alt="logo" className="logosidebar" />
         </div>
-        <div className="title">
+        <div className="title !mb-2">
           <h2>Xin Chào,</h2>
-          <h1>{user?.fullName.split(' ')[user?.fullName.split(' ').length - 1]}</h1>
+          <h1>{user?.fullName?.split(' ')[user?.fullName?.split(' ').length - 1]}</h1>
         </div>
         <ul>
           <li>
