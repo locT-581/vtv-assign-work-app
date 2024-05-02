@@ -14,12 +14,14 @@ import Popup from './components/Popup';
 const Home = lazy(() => import('./components/pages/Home'));
 const Login = lazy(() => import('./components/pages/Login'));
 const MyRequirements = lazy(() => import('./components/pages/MyRequirements'));
-const Schedule = lazy(() => import('./components/pages/Schedule'));
+// const Schedule = lazy(() => import('./components/pages/Schedule'));
 
 const RequirementList = lazy(() => import('./components/pages/RequirementList'));
 const UserList = lazy(() => import('./components/pages/UserList'));
 const RequirementDetail = lazy(() => import('./components/pages/RequirementDetail'));
 const AddRequirement = lazy(() => import('./components/pages/AddRequirement'));
+const UserInfo = lazy(() => import('./components/pages/UserInfo'));
+const FirstLogin = lazy(() => import('./components/pages/FirstLogin'));
 
 function App() {
   const dispatch = useAppDispatch();
@@ -48,8 +50,12 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/dang-nhap" element={<Login />} />
           <Route path="/yeu-cau-cua-toi" element={<MyRequirements />} />
-          <Route path="/lich-trinh" element={<Schedule />} />
+          {/* <Route path="/lich-trinh" element={<Schedule />} /> */}
           <Route path="/tao-yeu-cau-moi" element={<AddRequirement />} />
+          <Route path="/thong-tin-tai-khoan" element={<UserInfo />} />
+          <Route path="/chi-tiet-yeu-cau/:id" element={<RequirementDetail />} />
+
+          <Route path="/dang-nhap-lan-dau" element={<FirstLogin />} />
 
           <Route path="*" element={<div>Not found</div>} />
 
@@ -66,14 +72,6 @@ function App() {
             element={
               <PrivateRoute>
                 <UserList />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/chi-tiet-yeu-cau/:id"
-            element={
-              <PrivateRoute>
-                <RequirementDetail />
               </PrivateRoute>
             }
           />

@@ -6,8 +6,9 @@ export default {
       'vtv-red': '#D82428',
       'vtv-blue': '#2D3581',
       'vtv-green': '#0F9548',
-      'white': '#FFFFFF',
-      'red': '#f54242'
+      white: '#FFFFFF',
+      red: '#f54242',
+      black: '#000000',
     },
 
     extend: {},

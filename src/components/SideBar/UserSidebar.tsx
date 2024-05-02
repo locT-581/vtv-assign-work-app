@@ -33,11 +33,11 @@ const UserSidebar = () => {
         <ul>
           <li className="flex justify-start items-center">
             <FaUserAlt className="mr-2" />
-            <Link to="/">Thông tin tài khoản</Link>
+            <Link to="/thong-tin-tai-khoan">Thông tin tài khoản</Link>
           </li>
           <li className="flex justify-start items-center">
             <FaCheckCircle className="mr-2" />
-            <Link to="/">Yêu cầu của tôi</Link>
+            <Link to="/yeu-cau-cua-toi">Yêu cầu của tôi</Link>
           </li>
           <li className="flex justify-start items-center">
             <FaRegCalendarCheck className="mr-2" />

@@ -2,7 +2,7 @@
   "name": "vtv-app",
   "private": true,
   "version": "0.0.0",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -24,6 +24,9 @@
     "axios": "^1.6.8",
     "date-arithmetic": "^4.1.0",
     "firebase": "^10.11.1",
+    "firebase-functions": "^4.9.0",
+    "md5": "^2.3.0",
+    "nodemailer": "^6.9.13",
     "react": "^18.2.0",
     "react-big-calendar": "^1.12.0",
     "react-dom": "^18.2.0",
@@ -33,7 +36,9 @@
   },
   "devDependencies": {
     "@types/babel__core": "^7.20.5",
+    "@types/md5": "^2.3.5",
     "@types/node": "^20.12.7",
+    "@types/nodemailer": "^6.4.14",
     "@types/react": "^18.2.66",
     "@types/react-big-calendar": "^1.8.9",
     "@types/react-dom": "^18.2.22",

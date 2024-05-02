@@ -1,6 +1,7 @@
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import { RequirementStatus } from '../../types/requirement';
 
 export interface IRequirementItemProps {
   title: string;
@@ -8,7 +9,7 @@ export interface IRequirementItemProps {
   username: string;
   address: string;
   date: string;
-  status: string;
+  status: RequirementStatus;
 }
 
 export default function RequirementItem(props: IRequirementItemProps) {

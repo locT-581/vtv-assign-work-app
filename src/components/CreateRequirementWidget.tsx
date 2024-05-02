@@ -1,8 +1,11 @@
 import { IoAddCircle } from 'react-icons/io5';
 
-const CreateRequirementWidget = () => {
+interface ICreateRequirementWidgetProps {
+  onClick?: () => void;
+}
+const CreateRequirementWidget = (props: ICreateRequirementWidgetProps) => {
   return (
-    <div className="grid h-full grid-cols-4 grid-rows-4 gap-2 p-4 rounded-3xl bg-vtv-green">
+    <div onClick={props.onClick} className="grid h-full grid-cols-4 grid-rows-4 gap-2 p-4 rounded-3xl bg-vtv-green">
       <div className="row-span-2 col-span-2 text-6xl text-white">
         <IoAddCircle />
       </div>

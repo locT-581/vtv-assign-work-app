@@ -79,6 +79,23 @@ export default function AddRequirement() {
       status: 'Đang chờ',
     }).then(() => {
       setShowPopup(true);
+      // reset form
+      setForm({
+        id: '',
+        title: '',
+        address: '',
+        startDate: new Date().getTime(),
+        endDate: new Date().getTime(),
+        note: '',
+        supportTeams: [],
+        userId: '',
+        status: '',
+      });
+      // reset support teams
+      const checkboxes = document.querySelectorAll('.supportTeam') as NodeListOf<HTMLInputElement>;
+      checkboxes.forEach((checkbox) => {
+        checkbox.checked = false;
+      });
     });
   };
 
@@ -113,14 +130,13 @@ export default function AddRequirement() {
       )}
       <div className="w-full h-full flex flex-col justify-around bg-white py-6 px-12 rounded-3xl">
         <div className="w-full py-2">
-          <button
-            type="button"
-            className="!bg-transparent hover:border-transparent !outline-none !p-0 flex float-left text-[#999999]"
+          <div
+            className="cursor-pointer select-none font-normal flex float-left text-[#999999]"
             onClick={() => navigate(-1)}
           >
             <ArrowBackIosNewIcon color="inherit" />
             <p>Quay lại</p>
-          </button>
+          </div>
         </div>
 
         <div className="flex flex-col gap-1">
@@ -132,7 +148,7 @@ export default function AddRequirement() {
           <div className="flex gap-4 items-center">
             <label htmlFor="title" className="text-lg font-medium text-black flex flex-shrink-0">
               <p>Đề tài </p>
-              <p className="text-red-500">*</p>
+              <p className="text-red">*</p>
             </label>
             <input
               required
@@ -150,7 +166,7 @@ export default function AddRequirement() {
           <div className="flex gap-4 items-center">
             <label htmlFor="address" className="text-lg font-medium text-black flex flex-shrink-0">
               <p>Địa bàn </p>
-              <p className="text-red-500">*</p>
+              <p className="text-red">*</p>
             </label>
             <select
               required
@@ -159,7 +175,7 @@ export default function AddRequirement() {
               value={form.address}
               name="address"
               id="address"
-              className="!bg-transparent max-w-[300px] !border !border-[#D9DBE9] rounded-lg py-1 px-4  text-black"
+              className="cursor-pointer !bg-transparent max-w-[300px] !border !border-[#D9DBE9] rounded-lg py-1 px-4  text-black"
             >
               {cities.map((city) => (
                 <option key={city.province_id} value={city.province_id}>
@@ -170,7 +186,7 @@ export default function AddRequirement() {
             <select
               defaultValue=""
               id="address"
-              className="!bg-transparent !border !border-[#D9DBE9] max-w-[300px] rounded-lg py-1 px-4  text-black"
+              className="cursor-pointer !bg-transparent !border !border-[#D9DBE9] max-w-[300px] rounded-lg py-1 px-4  text-black"
             >
               {cities.map((city) => (
                 <option key={city.province_id} value={city.province_id}>
@@ -183,7 +199,7 @@ export default function AddRequirement() {
             <div className="flex items-center gap-2">
               <label htmlFor="startDate" className="text-lg font-medium text-black flex flex-shrink-0">
                 <p>Ngày bắt đầu</p>
-                <p className="text-red-500">*</p>
+                <p className="text-red">*</p>
               </label>
               <input
                 title=""
@@ -193,13 +209,13 @@ export default function AddRequirement() {
                 id="startDate"
                 name="startDate"
                 type="date"
-                className="text-black !bg-transparent max-w-[200px] w-full border border-[#D9DBE9] rounded-lg py-1 px-4 mt-1"
+                className="text-black cursor-pointer !bg-transparent max-w-[200px] w-full border border-[#D9DBE9] rounded-lg py-1 px-4 mt-1"
               />
             </div>
             <div className="flex items-center gap-2">
               <label htmlFor="endDate" className="text-lg font-medium text-black flex flex-shrink-0">
                 <p>Ngày kết thúc</p>
-                <p className="text-red-500">*</p>
+                <p className="text-red">*</p>
               </label>
               <input
                 onChange={handleChange}
@@ -207,7 +223,7 @@ export default function AddRequirement() {
                 id="endDate"
                 name="endDate"
                 type="date"
-                className="text-black !bg-transparent max-w-[200px] w-full border border-[#D9DBE9] rounded-lg py-1 px-4 mt-1"
+                className="text-black cursor-pointer !bg-transparent max-w-[200px] w-full border border-[#D9DBE9] rounded-lg py-1 px-4 mt-1"
               />
             </div>
           </div>
@@ -232,7 +248,7 @@ export default function AddRequirement() {
             <div className="w-3/4 min-w-[400px] flex gap-x-[5vw] flex-wrap  ">
               {supportTeams.map((team) => (
                 <div key={team.id} className="flex items-center gap-2 cursor-pointer">
-                  <Checkbox onChange={handleCheckboxChange} id={team.id} name={team.id} />
+                  <Checkbox className="supportTeam" onChange={handleCheckboxChange} id={team.id} name={team.id} />
                   <label htmlFor={team.id} className="text-black flex-shrink-0 text-lg font-medium cursor-pointer">
                     {team.team}
                   </label>

@@ -9,6 +9,7 @@ import WeatherWidget from '../../WeatherWidget';
 import PictureWidget from '../../PictureWidget';
 import CreateRequirementWidget from '../../CreateRequirementWidget';
 import MainCalendar from '../../MainCalendar';
+import { Link } from 'react-router-dom';
 
 export interface IUserHomeProps {}
 
@@ -18,7 +19,7 @@ export default function UserHome() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (user && !requirements) dispatch(getAllRequirementAsync({ userId: null }));
+    if (user && !requirements) dispatch(getAllRequirementAsync({ userId: user.id }));
 
     return () => {
       dispatch(switchPopup({ isShowPopup: false, popupElement: null }));
@@ -46,7 +47,9 @@ export default function UserHome() {
             <MainCalendar />
           </div>
           <div className="row-start-5 row-span-1 col-span-1">
-            <CreateRequirementWidget />
+            <Link to="/tao-yeu-cau-moi">
+              <CreateRequirementWidget />
+            </Link>
           </div>
           <div className="row-start-5 col-start-2 row-span-1 col-span-3">
             <PictureWidget />

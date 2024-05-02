@@ -31,7 +31,7 @@ export default function AdminSideBar() {
         <ul>
           <li className="flex justify-start items-center">
             <FaUserAlt className="mr-2" />
-            <Link to="/">Quản lý người dùng</Link>
+            <Link to="/danh-sach-nguoi-dung">Quản lý người dùng</Link>
           </li>
           <li className="flex justify-start items-center">
             <FaCheckCircle className="mr-2" />
