@@ -58,7 +58,7 @@ export default function App() {
     <div className="w-full relative h-full ">
       <div className="flex h-full flex-col gap-4">
         {requirementsPerPage?.map((requirement) => (
-          <Link to={'/chi-tiet-yeu-cau/' + requirement.id}>
+          <Link key={requirement.id} to={'/chi-tiet-yeu-cau/' + requirement.id}>
             <RowItem key={requirement.id}>
               <div className="w-[40%] text-vtv-blue text-lg font-semibold">
                 {

@@ -272,7 +272,7 @@ export const uploadAvatar = async (file: string, userId: string): Promise<void> 
 export const getAllUsers = async (): Promise<User[] | null> => {
   const users: User[] = [];
   const usersRef = collection(db, 'users');
-  await getDocs(usersRef)
+  await getDocs(query(usersRef, orderBy('createAt', 'desc')))
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         users.push({ id: doc.id, ...doc.data() } as User);
@@ -341,4 +341,14 @@ export const createUserInAuth = async (email: string, password: string): Promise
     });
     return userCredential;
   });
+};
+
+export const updateRequirement = async (requirement: Requirement): Promise<void> => {
+  const requirementRef = doc(db, 'requirements', requirement.id);
+  return await updateDoc(requirementRef, { ...requirement });
+};
+
+export const removeUser = async (userId: string): Promise<void> => {
+  console.log(userId);
+  return await deleteDoc(doc(db, 'users', userId));
 };

@@ -26,10 +26,6 @@ export default function UserHome() {
     };
   }, [dispatch, requirements, user]);
 
-  // const handleClick = () => {
-  //   dispatch(switchPopup({ isShowPopup: true, popupElement: <div>Popup</div> }));
-  // };
-
   return (
     <DefaultLayout>
       <div className="h-full">

@@ -8,7 +8,7 @@ export interface Requirement {
   endDate: number;
   note?: string;
   supportTeams: SupportTeams[];
-  userId: string;
+  user: User | null | undefined;
   status: RequirementStatus;
   reasonReject?: string;
 }

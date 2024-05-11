@@ -28,7 +28,7 @@ export default function AddRequirement() {
     endDate: new Date().getTime(),
     note: '',
     supportTeams: [],
-    userId: '',
+    user,
     status: '',
   });
 
@@ -59,6 +59,10 @@ export default function AddRequirement() {
     setForm({ ...form, [name]: value });
   };
 
+  useEffect(() => {
+    console.log(form);
+  }, [form]);
+
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
     if (checked) {
@@ -73,7 +77,7 @@ export default function AddRequirement() {
 
     createRequirement({
       ...form,
-      userId: user?.id ?? '',
+      user,
       startDate: new Date(form.startDate).getTime(),
       endDate: new Date(form.endDate).getTime(),
       status: 'Đang chờ',
@@ -88,7 +92,7 @@ export default function AddRequirement() {
         endDate: new Date().getTime(),
         note: '',
         supportTeams: [],
-        userId: '',
+        user,
         status: '',
       });
       // reset support teams
@@ -183,7 +187,7 @@ export default function AddRequirement() {
                 </option>
               ))}
             </select>
-            <select
+            {/* <select
               defaultValue=""
               id="address"
               className="cursor-pointer !bg-transparent !border !border-[#D9DBE9] max-w-[300px] rounded-lg py-1 px-4  text-black"
@@ -193,7 +197,7 @@ export default function AddRequirement() {
                   {city.province_name}
                 </option>
               ))}
-            </select>
+            </select> */}
           </div>
           <div className="flex items-center gap-10">
             <div className="flex items-center gap-2">
