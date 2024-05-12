@@ -35,11 +35,11 @@ export default function AdminSideBar() {
           </li>
           <li className="flex justify-start items-center">
             <FaCheckCircle className="mr-2" />
-            <Link to="/">Yêu cầu sắp tới</Link>
+            <Link to="/quan-ly-phuong-tien">Quản lý phương tiện</Link>
           </li>
           <li className="flex justify-start items-center">
             <FaRegCalendarCheck className="mr-2" />
-            <Link to="/">Lịch trình</Link>
+            <Link to="/lich-trinh">Lịch trình</Link>
           </li>
         </ul>
         <div className="logout-button">

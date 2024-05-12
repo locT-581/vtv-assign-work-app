@@ -22,6 +22,7 @@ import { Department, Requirement, SupportTeams } from '../types/requirement';
 import axios from 'axios';
 import { District, Province } from '../types/common';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { Vehicle } from '../types/vehicle.';
 
 /**
  * Login user by firebase Auth
@@ -41,7 +42,9 @@ export const getUserById = async (id: string): Promise<User | null> => {
   await getDoc(doc(db, 'users', id))
     .then((doc) => {
       if (doc.exists()) {
-        user = { id: doc.id, ...doc.data() } as User;
+        const { createAt, ...tempUser } = doc.data();
+        console.log('🚀 ~ .then ~ createdAt:', createAt);
+        user = { id: doc.id, ...tempUser } as User;
       } else {
         console.log('No such document!');
         return null;
@@ -84,7 +87,7 @@ export const getAllRequirement = async ({ userId }: { userId: string | null }): 
         return [];
       });
   } else {
-    const queryRequirement = query(requirementRef, where('userId', '==', userId), orderBy('createdAt', 'desc'));
+    const queryRequirement = query(requirementRef, where('user.id', '==', userId), orderBy('createdAt', 'desc'));
     await getDocs(queryRequirement)
       .then((querySnapshot) => {
         console.log(querySnapshot);
@@ -275,7 +278,9 @@ export const getAllUsers = async (): Promise<User[] | null> => {
   await getDocs(query(usersRef, orderBy('createAt', 'desc')))
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        users.push({ id: doc.id, ...doc.data() } as User);
+        const { createdAt, ...tempUser } = doc.data();
+        console.log('🚀 ~ querySnapshot.forEach ~ createdAt:', createdAt);
+        users.push({ id: doc.id, ...tempUser } as User);
       });
     })
     .catch((error) => {
@@ -351,4 +356,128 @@ export const updateRequirement = async (requirement: Requirement): Promise<void>
 export const removeUser = async (userId: string): Promise<void> => {
   console.log(userId);
   return await deleteDoc(doc(db, 'users', userId));
+};
+
+export const getAllVehicle = async (): Promise<any> => {
+  const vehicles: Vehicle[] = [];
+  const vehicleRef = collection(db, 'vehicles');
+  await getDocs(vehicleRef)
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        vehicles.push({ id: doc.id, ...doc.data() } as Vehicle);
+      });
+    })
+    .catch((error) => {
+      console.log('Error getting documents: ', error);
+      return [];
+    });
+  return vehicles;
+};
+
+export const getVehicleById = async (vehicleId: string): Promise<Vehicle | null> => {
+  let vehicle: Vehicle | null = null;
+  await getDoc(doc(db, 'vehicles', vehicleId))
+    .then((doc) => {
+      if (doc.exists()) {
+        vehicle = { id: doc.id, ...doc.data() } as Vehicle;
+      } else {
+        console.log('No such document!');
+        return null;
+      }
+    })
+    .catch((error) => {
+      console.log('Error getting document:', error);
+      return null;
+    });
+
+  return vehicle;
+};
+
+export const addVehicle = async (vehicle: Vehicle): Promise<any> => {
+  const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+  let id = '';
+  // check if vehicle.licensePlate is exist in vehicles collection
+  const vehiclesRef = collection(db, 'vehicles');
+  const queryVehicles = query(vehiclesRef, where('licensePlate', '==', vehicle.licensePlate));
+  const querySnapshot = await getDocs(queryVehicles);
+  if (!querySnapshot.empty) {
+    throw new Error('Biển số xe đã được sử dụng!');
+  }
+  await addDoc(collection(db, 'vehicles'), {
+    ...vehicle,
+    createdAt: serverTimestamp(),
+    color: '#' + randomColor,
+  }).then((docRef) => {
+    id = docRef.id;
+  });
+
+  return { ...vehicle, color: '#' + randomColor, id, createdAt: serverTimestamp() };
+};
+
+export const removeVehicle = async (vehicleId: string): Promise<void> => {
+  return await deleteDoc(doc(db, 'vehicles', vehicleId));
+};
+
+export const updateVehicle = async (vehicle: Vehicle): Promise<void> => {
+  const vehicleRef = doc(db, 'vehicles', vehicle.id);
+  return await updateDoc(vehicleRef, { ...vehicle });
+};
+
+export const uploadVehicleImage = async (file: string, vehicleId: string): Promise<void> => {
+  /** @type {any} */
+  const metadata = {
+    contentType: 'image/jpeg',
+  };
+  const storageRef = ref(storage, 'vehicle-avatars/' + vehicleId);
+  fetch(file)
+    .then((response) => response.blob())
+    .then((blobData) => {
+      const uploadTask = uploadBytesResumable(storageRef, blobData, metadata);
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+          switch (snapshot.state) {
+            case 'paused':
+              console.log('Upload is paused');
+              break;
+            case 'running':
+              console.log('Upload is running');
+              break;
+          }
+        },
+        (error) => {
+          switch (error.code) {
+            case 'storage/unauthorized':
+              break;
+            case 'storage/canceled':
+              break;
+            case 'storage/unknown':
+              break;
+          }
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            console.log('File available at', downloadURL);
+            getVehicleById(vehicleId)
+              .then((vehicle) => {
+                if (vehicle) {
+                  vehicle.image = downloadURL;
+                  updateVehicle(vehicle).then(() => {
+                    console.log('Update avatar success');
+                  });
+                }
+              })
+              .catch((error) => {
+                console.error('Error getting vehicle data:', error);
+              });
+          });
+        },
+      );
+    })
+    .catch((error) => {
+      console.error('Error fetching image data:', error);
+    });
 };

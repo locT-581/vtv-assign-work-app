@@ -84,10 +84,10 @@ export default function UserInfo() {
   return (
     <DefaultLayout>
       {showPopup && (
-        <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-screen h-screen flex justify-center items-center bg-slate-950 bg-opacity-50">
+        <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-screen h-screen flex justify-center items-center bg-black bg-opacity-50">
           <div className="bg-white rounded-3xl flex flex-col justify-center items-center gap-2 text-center p-9 shadow-md">
             <CheckCircleIcon color="success" />
-            <h2 className="text-[#2D3581] text-3xl font-bold">Thông báo</h2>
+            <h2 className="text-[#2D3581] text-3xl font-bold">Thông báo </h2>
             <p className="text-[#999999] text-xl font-semibold">Bạn đã gửi yêu cầu thành công</p>
             <button
               onClick={() => setShowPopup(false)}

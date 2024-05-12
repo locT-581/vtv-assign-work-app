@@ -18,12 +18,14 @@ export default function MainCalender() {
   useEffect(() => {
     const temp: EventInput[] = [];
     requirements?.forEach((requirement) => {
-      temp.push({
-        id: requirement.id,
-        title: requirement.title,
-        start: requirement.startDate,
-        end: requirement.endDate,
-      });
+      if (requirement.status === 'Đã phân công') {
+        temp.push({
+          id: requirement.id,
+          title: requirement.title,
+          start: requirement.startDate,
+          end: requirement.endDate,
+        });
+      }
     });
     setEvents(temp);
   }, [requirements]);

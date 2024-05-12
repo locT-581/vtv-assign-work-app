@@ -23,6 +23,9 @@ const AddRequirement = lazy(() => import('./components/pages/AddRequirement'));
 const UserInfo = lazy(() => import('./components/pages/UserInfo'));
 const FirstLogin = lazy(() => import('./components/pages/FirstLogin'));
 
+const Schedule = lazy(() => import('./components/pages/Schedule'));
+import VehicleList from './components/pages/VehicleList';
+
 function App() {
   const dispatch = useAppDispatch();
 
@@ -72,6 +75,23 @@ function App() {
             element={
               <PrivateRoute>
                 <UserList />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/lich-trinh"
+            element={
+              <PrivateRoute>
+                <Schedule />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/quan-ly-phuong-tien"
+            element={
+              <PrivateRoute>
+                <VehicleList />
               </PrivateRoute>
             }
           />

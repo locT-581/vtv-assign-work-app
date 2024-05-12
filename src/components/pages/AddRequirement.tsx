@@ -103,6 +103,17 @@ export default function AddRequirement() {
     });
   };
 
+  const handleAddVehicle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { checked } = e.target;
+    if (checked) {
+      setForm({ ...form, vehicles: [] });
+    } else {
+      const { vehicles, ...tempForm } = form;
+      console.log('🚀 ~ handleAddVehicle ~ vehicles:', vehicles);
+      setForm({ ...tempForm });
+    }
+  };
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       console.group('Yêu cầu');
@@ -117,7 +128,7 @@ export default function AddRequirement() {
   return (
     <DefaultLayout>
       {showPopup && (
-        <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-screen h-screen flex justify-center items-center bg-slate-950 bg-opacity-50">
+        <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-screen h-screen flex justify-center items-center bg-black bg-opacity-50">
           <div className="bg-white rounded-3xl flex flex-col justify-center items-center gap-2 text-center p-9 shadow-md">
             <CheckCircleIcon color="success" />
             <h2 className="text-[#2D3581] text-3xl font-bold">Thông báo</h2>
@@ -258,6 +269,12 @@ export default function AddRequirement() {
                   </label>
                 </div>
               ))}
+              <div className="flex items-center gap-2 cursor-pointer">
+                <Checkbox className="vehicles" onChange={handleAddVehicle} id="vehicles" name="vehicles" />
+                <label htmlFor="vehicles" className="text-black flex-shrink-0 text-lg font-medium cursor-pointer">
+                  Phương tiện di chuyển
+                </label>
+              </div>
             </div>
           </div>
 

@@ -38,7 +38,10 @@ export default function RequirementItem(props: IRequirementItemProps) {
           </div>
         </div>
         <div className="flex gap-1">
-          <FiberManualRecordIcon color="warning" sx={{ fontSize: '14px' }} />
+          <FiberManualRecordIcon
+            color={props.status === 'Đã phân công' ? 'success' : props.status === 'Đang chờ' ? 'warning' : 'error'}
+            sx={{ fontSize: '14px' }}
+          />
           <p className="text-[10px]">{props.status}</p>
         </div>
       </div>

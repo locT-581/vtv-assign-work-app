@@ -1,4 +1,5 @@
 import { User } from './user';
+import { Vehicle } from './vehicle.';
 
 export interface Requirement {
   id: string;
@@ -11,6 +12,7 @@ export interface Requirement {
   user: User | null | undefined;
   status: RequirementStatus;
   reasonReject?: string;
+  vehicles?: Vehicle[];
 }
 
 export interface SupportTeams {
