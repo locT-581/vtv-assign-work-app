@@ -27,6 +27,8 @@ export default function VehicleList() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  const [showRemoveButton, setShowRemoveButton]= useState(false)
+  const [showEditButton, setShowEditButton]= useState(false)
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [popupType, setPopupType] = useState<PopupType>('warning');
   const [currentVehicleToRemove, setCurrentVehicleToRemove] = useState<string | null>(null);
@@ -36,6 +38,18 @@ export default function VehicleList() {
   const [page, setPage] = useState<number>(1);
   const [count, setCount] = useState<number>(0);
   const [vehiclePerPage, setVehiclePerPage] = useState<Vehicle[]>([]);
+
+  const handleShowRemoveButton = () => {
+    setShowRemoveButton(true)
+  }
+  const handleShowEditButton = () => {
+    setShowEditButton(true)
+  }
+
+  const handelCancel = () => {
+    setShowRemoveButton(false)
+    setShowEditButton(false)
+  }
 
   useEffect(() => {
     const start = (page - 1) * itemPerPage;
@@ -80,7 +94,7 @@ export default function VehicleList() {
               <div className="flex gap-2 items-center font-semibold ">
                 <div
                   onClick={() => setShowPopup(false)}
-                  className="text-vtv-blue px-4 border border-vtv-blue rounded-full !py-1 cursor-pointer"
+                  className="text-vtv-blue px-4 border border-vtv-blue rounded-full !py-2 cursor-pointer"
                 >
                   Hủy
                 </div>
@@ -89,7 +103,7 @@ export default function VehicleList() {
                     handleRemoveVehicle();
                   }}
                   type="button"
-                  className="text-white bg-[#2D3581] rounded-full !py-1 !px-4 float-right"
+                  className="text-white bg-[#2D3581] rounded-full !py-2 !px-4 float-right"
                 >
                   Xác nhận
                 </button>
@@ -104,7 +118,7 @@ export default function VehicleList() {
               <button
                 onClick={() => setShowPopup(false)}
                 type="button"
-                className="text-white bg-[#2D3581] rounded-full !py-1 !px-4 float-right"
+                className="text-white bg-[#2D3581] rounded-full !py-2 !px-4 float-right"
               >
                 Xác nhận
               </button>
@@ -124,13 +138,47 @@ export default function VehicleList() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-2 mb-4">
             <h2 className="w-full text-start text-4xl text-[#2D3581] font-semibold">Danh sách phương tiện di chuyển</h2>
             <div className="flex gap-2 justify-end text-xs text-black">
-              <button className="flex gap-1 items-center !py-1" type="button" onClick={handleAddUser}>
-                <AddIcon />
-                <p>Thêm</p>
-              </button>
+              {/* {!showEditButton || !showRemoveButton ? (
+                <button className="flex gap-1 items-center !py-2" type="button" onClick={handleAddUser}>
+                  <AddIcon />
+                  <p>Thêm</p>
+                </button>
+              ):null}
+              {!showEditButton ? (
+                <button className="flex gap-1 items-center !py-2" type="button" onClick={handleShowEditButton}>
+                  <p>Sửa</p>
+                </button>
+              ):null}
+              {!showRemoveButton ? (
+                <button className="flex gap-1 items-center !py-2" type="button" onClick={handleShowRemoveButton}>
+                  <p>Xoá</p>
+                </button>
+              ):(
+                <button className="flex gap-1 items-center !py-2" type="button" onClick={handelCancel}>
+                  <p>Huỷ</p>
+                </button>
+              )} */}
+              {!showEditButton && !showRemoveButton ? (
+                <div className="flex gap-2">
+                  <button className="flex gap-1 items-center !py-2" type="button" onClick={handleAddUser}>
+                    <AddIcon />
+                    <p>Thêm</p>
+                  </button>
+                  <button className="flex gap-1 items-center !py-2" type="button" onClick={handleShowEditButton}>
+                    <p>Sửa</p>
+                  </button>
+                  <button className="flex gap-1 items-center !py-2" type="button" onClick={handleShowRemoveButton}>
+                    <p>Xoá</p>
+                  </button>
+                </div>
+              ):(
+                <button className="flex gap-1  items-center !py-2" type="button" onClick={handelCancel}>
+                  <p>Huỷ</p>
+                </button>
+              )}
             </div>
           </div>
           <div className="w-full relative h-full ">
@@ -146,7 +194,7 @@ export default function VehicleList() {
                       <p>{vehicle?.model}</p>
                       <p>{vehicle?.dominantColor}</p>
                     </div>
-                    <div className="w-1/3 text-end flex justify-between">
+                    <div className="w-1/3 text-end flex justify-end">
                       <div className="flex items-center gap-1">
                         <FiberManualRecordIcon
                           color={vehicle.status === 'Đang chờ' ? 'success' : 'error'}
@@ -154,42 +202,48 @@ export default function VehicleList() {
                         />
                         {vehicle?.status}
                       </div>
-                      <div className="flex gap-4">
-                        <p
-                          onClick={() => {
-                            dispatch(
-                              switchPopup({
-                                isShowPopup: true,
-                                popupElement: (
-                                  <AddVehiclePopup
-                                    onSuccess={() => {
-                                      getAllVehicle().then((data) => {
-                                        setAllVehicle(data ?? []);
-                                      });
-                                    }}
-                                    vehicle={allVehicle.find((veh) => veh.id === vehicle.id)}
-                                  />
-                                ),
-                              }),
-                            );
-                            setCurrentVehicleToRemove(vehicle.id);
-                          }}
-                          className="flex text-vtv-blue cursor-pointer"
-                        >
-                          Sửa
-                        </p>
-                        <p
-                          onClick={() => {
-                            setPopupType('warning');
-                            setShowPopup(true);
-                            setCurrentVehicleToRemove(vehicle.id);
-                          }}
-                          className="flex text-vtv-red cursor-pointer"
-                        >
-                          Xóa
-                        </p>
+                      {showEditButton || showRemoveButton ? (
+                          <div className="flex gap-4 ml-12">
+                            {showEditButton ? (
+                              <p
+                                onClick={() => {
+                                  dispatch(
+                                    switchPopup({
+                                      isShowPopup: true,
+                                      popupElement: (
+                                        <AddVehiclePopup
+                                          onSuccess={() => {
+                                            getAllVehicle().then((data) => {
+                                              setAllVehicle(data ?? []);
+                                            });
+                                          }}
+                                          vehicle={allVehicle.find((veh) => veh.id === vehicle.id)}
+                                        />
+                                      ),
+                                    }),
+                                  );
+                                  setCurrentVehicleToRemove(vehicle.id);
+                                }}
+                                className="flex text-vtv-blue cursor-pointer"
+                              >
+                                Sửa
+                              </p>
+                            ):null}
+                            {showRemoveButton ? (
+                              <p
+                                onClick={() => {
+                                  setPopupType('warning');
+                                  setShowPopup(true);
+                                  setCurrentVehicleToRemove(vehicle.id);
+                                }}
+                                className="flex text-vtv-red cursor-pointer"
+                              >
+                                Xóa
+                              </p>
+                            ):null}
+                          </div>
+                      ):null}
                       </div>
-                    </div>
                   </div>
                 </RowItem>
               ))}
@@ -306,7 +360,7 @@ const AddVehiclePopup = (props: AddVehiclePopupProps) => {
             <button
               onClick={() => setError('')}
               type="button"
-              className="text-white bg-[#2D3581] rounded-full !py-1 !px-6 float-right"
+              className="text-white bg-[#2D3581] rounded-full !py-2 !px-6 float-right"
             >
               Xác nhận
             </button>
@@ -389,7 +443,7 @@ const AddVehiclePopup = (props: AddVehiclePopupProps) => {
           </div>
 
           <div className="w-full py-4">
-            <button type="submit" className=" w-fit text-white bg-[#2D3581] rounded-full !py-1 !px-6 float-right">
+            <button type="submit" className=" w-fit text-white bg-[#2D3581] rounded-full !py-2 !px-6 float-right">
               Xác nhận
             </button>
           </div>

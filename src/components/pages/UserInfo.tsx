@@ -99,7 +99,7 @@ export default function UserInfo() {
           </div>
         </div>
       )}
-      <div className="w-full h-full flex flex-col justify-around bg-white py-6 px-12 rounded-3xl">
+      <div className="w-full h-full justify-between flex flex-col bg-white py-12 px-12 rounded-3xl">
         <div className="w-full py-2">
           <div
             className="cursor-pointer select-none font-normal flex float-left text-[#999999]"
@@ -110,9 +110,9 @@ export default function UserInfo() {
           </div>
         </div>
 
-        <div className="flex w-full justify-between">
-          <div className="flex flex-col gap-4">
-            <h2 className="w-full text-start text-4xl text-[#2D3581] font-semibold">Thông tin tài khoản</h2>
+        <div className="flex w-full justify-between items-center">
+          <div className="flex flex-col gap-4 mt-12">
+            <h2 className="w-full text-start text-2xl laptop:text-4xl desktop:text-6xl text-[#2D3581] font-semibold">Thông tin tài khoản</h2>
             <span className="text-xs text-[#999999]">*Email sẽ không được phép thay đổi</span>
           </div>
           <div
@@ -132,15 +132,14 @@ export default function UserInfo() {
                     }&background=2D3581&color=fff`
               }
               alt="avatar"
-              className="w-20 h-20 rounded-full object-cover"
+              className="w-20 h-20 desktop:w-32 desktop:h-32 rounded-full object-cover"
             />
             <div className="bg-[#DBDBDB] w-[30px] h-[30px] rounded-full flex justify-center items-center border -mt-4">
               <CameraAltIcon color="inherit" fontSize="small" />
             </div>
           </div>
-        </div>
-
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3 pb-10">
+        </div>    
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6 pb-10 mt-2">
           <div className="flex gap-4 items-center">
             <label htmlFor="fullName" className="text-lg font-medium text-black flex flex-shrink-0">
               Họ & tên
@@ -240,12 +239,12 @@ export default function UserInfo() {
             />
           </div>
 
+        </form>
           <div className="w-full py-4">
             <button type="submit" className=" w-fit text-white bg-[#2D3581] rounded-full !py-1 !px-6 float-right">
               Cập nhật
             </button>
           </div>
-        </form>
       </div>
     </DefaultLayout>
   );

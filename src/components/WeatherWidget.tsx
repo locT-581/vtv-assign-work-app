@@ -84,20 +84,23 @@ const WeatherWidget: React.FC = () => {
   }, []);
 
   return (
-    <div className="text-white flex items-center justify-center h-full bg-vtv-red rounded-3xl px-8 py-8">
+    <div className="text-white flex items-center justify-center h-full bg-vtv-red rounded-3xl px-2 desktop:px-8 py-8">
       {loading ? (
         <div className="flex items-center justify-center">
           <RiLoader2Fill className="animate-spin text-6xl" />
         </div>
       ) : (
         weatherData && (
-          <div className="flex w-[60%] h-full">
-            <div className="w-[40%] flex items-center justify-center">
-              <div className="text-9xl"> {iconChanger(weatherData.weather[0].main)}</div>
+          <div className="flex w-full tablet:w-1/2 desktop:w-[60%] h-full justify-center items-center">
+            <div className="w-[40%] desktop:flex items-center justify-center">
+              <div className="text-4xl tablet:text-7xl desktop:text-9xl" > {iconChanger(weatherData.weather[0].main)}</div>
+              <div className=" w-full font-semibold desktop:h-[70%] desktop:hidden">
+                <p className="tablet:text-4xl desktop:text-8xl flex items-end">{weatherData.main.temp.toFixed(0)}°C</p> {/* Sửa đổi nhiệt độ ở đây */}
+              </div>
             </div>
-            <div className="flex flex-col w-[60%] h-full justify-between">
-              <div className="w-full font-semibold h-[70%]">
-                <p className="text-8xl flex items-end">{weatherData.main.temp.toFixed(0)}°C</p> {/* Sửa đổi nhiệt độ ở đây */}
+            <div className="flex flex-col w-[60%] h-full justify-between hidden desktop:block">
+              <div className=" w-full font-semibold h-[70%]">
+                <p className="2xl:text-6xl desktop:text-8xl flex items-end">{weatherData.main.temp.toFixed(0)}°C</p> {/* Sửa đổi nhiệt độ ở đây */}
               </div>
               <div className="w-full font-medium h-[30%]">
                 <p className="text-3xl">{weatherData.name}</p>
@@ -107,7 +110,7 @@ const WeatherWidget: React.FC = () => {
         )
       )}
       {!loading && (
-        <div className="text-center flex w-[40%] h-2/3">
+        <div className="text-center desktop:flex w-[40%] desktop:h-2/3 items-center justify-center">
           <div className="w-full text-center font-medium">
             <div className="flex items-center text-xl justify-center">
               <TbDropletHalf2Filled className="mr-2" />
@@ -118,14 +121,14 @@ const WeatherWidget: React.FC = () => {
               <p className="text-l justify-end">%</p>
             </div>
           </div>
-          <div className="w-full text-center font-medium">
-            <div className="flex items-center text-xl justify-center">
+          <div className="flex flex-row items-center justify-center desktop:flex-col w-full text-center font-medium">
+            <div className="flex items-center justify-center text-xl mb-2 desktop:mb-0">
               <RiWindyFill className="mr-2" />
-              <p>Gió</p>
+              <p className="hidden desktop:block">Gió</p>
             </div>
-            <div className="flex justify-center">
-              <p className="text-6xl">{weatherData.wind.speed.toFixed(1)}</p>
-              <p className="text-l justify-end">km/h</p>
+            <div className="flex justify-center items-center">
+              <p className="text-xl desktop:text-6xl">{weatherData.wind.speed.toFixed(1)}</p>
+              <p className="text-l ml-2">km/h</p>
             </div>
           </div>
         </div>

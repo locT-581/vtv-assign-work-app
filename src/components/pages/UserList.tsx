@@ -28,6 +28,7 @@ export default function UserList() {
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [popupType, setPopupType] = useState<PopupType>('warning');
   const [currentUserToRemove, setCurrentUserToRemove] = useState<string | null>(null);
+  const [showRemoveButton, setShowRemoveButton]= useState(false)
 
   const [allUsers, setAllUsers] = useState<User[]>([]);
 
@@ -56,6 +57,14 @@ export default function UserList() {
     })();
   }, []);
 
+  const handleShowRemoveButton = () => {
+    setShowRemoveButton(true)
+  }
+
+  const handelCancel = () => {
+    setShowRemoveButton(false)
+  }
+
   const handleAddUser = () => {
     dispatch(switchPopup({ isShowPopup: true, popupElement: <AddUserPopup /> }));
   };
@@ -83,7 +92,7 @@ export default function UserList() {
               <div className="flex gap-2 items-center font-semibold ">
                 <div
                   onClick={() => setShowPopup(false)}
-                  className="text-vtv-blue px-4 border border-vtv-blue rounded-full !py-1 cursor-pointer"
+                  className="text-vtv-blue px-4 border border-vtv-blue rounded-full !py-2 cursor-pointer"
                 >
                   Hủy
                 </div>
@@ -92,7 +101,7 @@ export default function UserList() {
                     handleRemoveUser();
                   }}
                   type="button"
-                  className="text-white bg-[#2D3581] rounded-full !py-1 !px-4 float-right"
+                  className="text-white bg-[#2D3581] rounded-full !py-2 !px-4 float-right"
                 >
                   Xác nhận
                 </button>
@@ -107,7 +116,7 @@ export default function UserList() {
               <button
                 onClick={() => setShowPopup(false)}
                 type="button"
-                className="text-white bg-[#2D3581] rounded-full !py-1 !px-4 float-right"
+                className="text-white bg-[#2D3581] rounded-full !py-2 !px-4 float-right"
               >
                 Xác nhận
               </button>
@@ -127,23 +136,32 @@ export default function UserList() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-2 mb-4">
             <h2 className="w-full text-start text-4xl text-[#2D3581] font-semibold">Danh sách người dùng</h2>
             <div className="flex gap-2 justify-end text-xs text-black">
-              <button className="flex gap-1 items-center !py-1" type="button" onClick={handleAddUser}>
+              <button className="flex gap-1 items-center !py-2" type="button" onClick={handleAddUser}>
                 <AddIcon />
                 <p>Thêm</p>
               </button>
+              {!showRemoveButton ? (
+              <button className="flex gap-1 items-center !py-2" type="button" onClick={handleShowRemoveButton}>
+                <p>Xoá</p>
+              </button>
+              ):(
+              <button className="flex gap-1 items-center !py-2" type="button" onClick={handelCancel}>
+              <p>Huỷ</p>
+              </button>
+              )}
             </div>
           </div>
           <div className="w-full relative h-full ">
-            <div className="flex h-full flex-col gap-3">
+            <div className="flex h-full flex-col gap-6">
               {usersPerPage?.map((user, i) => (
                 <RowItem key={user.id || i}>
                   <div className="w-full flex justify-between items-center">
                     <div className="w-1/3 flex gap-2 items-center">
-                      <img src={user?.avatar} alt="" className="w-5 h-5 rounded-full" />
-                      <p className="font-semibold">
+                      <img src={user?.avatar} alt="" className="w-6 h-6 laptop:w-12 laptop:h-12 rounded-2xl" />
+                      <p className="font-semibold text-lg ml-6">
                         {(user?.fullName.split(' ')[user?.fullName.split(' ').length - 2] ?? '') +
                           ' ' +
                           (user?.fullName.split(' ')[user?.fullName.split(' ').length - 1] ?? '')}
@@ -152,16 +170,20 @@ export default function UserList() {
                     <div className="w-1/3 text-start">{user?.email}</div>
                     <div className="w-1/3 text-end flex justify-between">
                       {departments.find((department) => department.id === user.department)?.name}
-                      <p
-                        onClick={() => {
-                          setPopupType('warning');
-                          setShowPopup(true);
-                          setCurrentUserToRemove(user.id);
-                        }}
-                        className="flex text-vtv-red cursor-pointer"
-                      >
-                        Xóa
-                      </p>
+                    </div>
+                    <div>
+                      {showRemoveButton ? (
+                          <p
+                            onClick={() => {
+                              setPopupType('warning');
+                              setShowPopup(true);
+                              setCurrentUserToRemove(user.id);
+                            }}
+                            className="flex text-vtv-red cursor-pointer"
+                          >
+                            Xóa
+                          </p>
+                      ):null}
                     </div>
                   </div>
                 </RowItem>
@@ -241,7 +263,7 @@ const AddUserPopup = () => {
             <button
               onClick={() => setError('')}
               type="button"
-              className="text-white bg-[#2D3581] rounded-full !py-1 !px-6 float-right"
+              className="text-white bg-[#2D3581] rounded-full !py-2 !px-6 float-right"
             >
               Xác nhận
             </button>
@@ -360,7 +382,7 @@ const AddUserPopup = () => {
           </div>
 
           <div className="w-full py-4">
-            <button type="submit" className=" w-fit text-white bg-[#2D3581] rounded-full !py-1 !px-6 float-right">
+            <button type="submit" className=" w-fit text-white bg-[#2D3581] rounded-full !py-2 !px-6 float-right">
               Xác nhận
             </button>
           </div>

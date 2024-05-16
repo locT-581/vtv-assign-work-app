@@ -4,7 +4,7 @@ import { logout } from '../../apis/userAPI';
 import getIcon from '../../utils/getIcon';
 import { useAppSelector } from '../../redux/hook';
 
-import { FaUserAlt, FaCheckCircle, FaRegCalendarCheck } from 'react-icons/fa';
+import { FaUserAlt, FaCheckCircle, FaRegCalendarCheck, FaSignOutAlt, FaCarAlt, FaHome} from 'react-icons/fa';
 
 export default function AdminSideBar() {
   const navigate = useNavigate();
@@ -19,31 +19,44 @@ export default function AdminSideBar() {
       .catch((error) => console.log(error));
   };
   return (
-    <div className="sidebar w-1/4">
-      <div className="sidebarinside">
+    <div className="sidebar w-[8vh] desktop:w-1/5">
+      <div className="px-4 py-12 desktop:px-8 h-full flex flex-col justify-between ">
         <div className="logo-placeholder">
           <img src={getIcon('logoVTV')} alt="logo" className="logosidebar" />
         </div>
-        <div className="title text-vtv-blue">
+        <div className="title text-vtv-blue hidden desktop:block">
           <p className="text-3xl font-medium">Xin Chào,</p>
           <p className="text-7xl font-bold">{user?.fullName.split(' ')[user?.fullName.split(' ').length - 1]}</p>
         </div>
-        <ul>
-          <li className="flex justify-start items-center">
-            <FaUserAlt className="mr-2" />
-            <Link to="/danh-sach-nguoi-dung">Quản lý người dùng</Link>
+        <ul className="flex-row items-center">
+          <li className="flex justify-center items-center desktop:justify-start">
+            <Link to="/" className="flex items-center my-2">
+              <FaHome className="desktop:mr-4" />
+              <h2 className="hidden desktop:block text-xl">Trang chủ</h2>
+            </Link>
           </li>
-          <li className="flex justify-start items-center">
-            <FaCheckCircle className="mr-2" />
-            <Link to="/quan-ly-phuong-tien">Quản lý phương tiện</Link>
+          <li className="flex justify-center items-center desktop:justify-start">
+            <Link to="/danh-sach-nguoi-dung" className="flex items-center my-2">
+              <FaUserAlt className="desktop:mr-4" />
+              <h2 className="hidden desktop:block text-xl">Quản lý người dùng</h2>
+            </Link>
           </li>
-          <li className="flex justify-start items-center">
-            <FaRegCalendarCheck className="mr-2" />
-            <Link to="/lich-trinh">Lịch trình</Link>
+          <li className="flex justify-center items-center desktop:justify-start">
+            <Link to="/quan-ly-phuong-tien" className="flex items-center my-2">
+              <FaCarAlt className="desktop:mr-4" />  
+              <h2 className="hidden desktop:block text-xl">Quản lý phương tiện</h2>
+            </Link>
+          </li>
+          <li className="flex justify-center items-center desktop:justify-start">
+            <Link to="/lich-trinh" className="flex items-center">
+              <FaRegCalendarCheck className="desktop:mr-4" />  
+              <h2 className="hidden desktop:block text-xl">Lịch trình</h2>
+            </Link>
           </li>
         </ul>
-        <div className="logout-button">
-          <button onClick={handleSignOut}>Đăng xuất</button>
+        <div className="mt-auto flex justify-center">
+          <button onClick={handleSignOut} className="hidden desktop:block">Đăng xuất</button>
+          <FaSignOutAlt onClick={handleSignOut} className="desktop:hidden"/>
         </div>
         <div>
           <h6>VTVapp v1.0</h6>

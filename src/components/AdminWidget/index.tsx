@@ -11,7 +11,7 @@ interface AdminWidgetProps {
 const AdminWidget = (props: AdminWidgetProps) => {
   return (
     <div className="h-full">
-      <div className="grid h-full grid-cols-6 grid-rows-5 gap">
+      <div className="grid h-full grid-cols-6 grid-rows-5 gap-4">
         <div className="row-span-1 col-span-1">
           <ClockWidget />
         </div>
@@ -22,7 +22,7 @@ const AdminWidget = (props: AdminWidgetProps) => {
           <RequirementList />
         </div>
         <div className="row-start-2 row-span-3 col-span-4">{props.children}</div>
-        <div className="row-start-5 row-span-1 col-span-4">
+        <div className="row-start-5 row-span-1 col-span-4 hidden tablet:block">
           <PictureWidget />
         </div>
       </div>

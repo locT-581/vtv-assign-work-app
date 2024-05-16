@@ -11,7 +11,7 @@ const CreateRequirementWidget = (props: ICreateRequirementWidgetProps) => {
       </div>
 
       <div className="row-start-4 row-span-1 col-span-4">
-        <p className="font-semibold text-3xl text-white">Tạo yêu cầu</p>
+        <p className="font-semibold text-3xl text-white hidden desktop:block">Tạo yêu cầu</p>
       </div>
     </div>
   );

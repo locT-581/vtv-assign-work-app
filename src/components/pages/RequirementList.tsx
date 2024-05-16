@@ -42,7 +42,7 @@ export default function RequirementList() {
   }, [dispatch, requirements, user]);
 
   return (
-    <div className="bg-white max-w-[400px] h-[calc(100vh-64px)] rounded-3xl px-4 py-10">
+    <div className="bg-white w-full h-[calc(100vh-64px)] rounded-3xl px-4 py-10">
       <h2 className="w-full text-start text-2xl text-black font-semibold">Yêu cầu sắp tới</h2>
       <div className="w-full h-full flex flex-col gap-4 overflow-y-auto pt-2">
         {requirements?.map((item, i) => (

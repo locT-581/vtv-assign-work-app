@@ -11,9 +11,6 @@ const ClockWidget = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const options: Intl.DateTimeFormatOptions = { hour: 'numeric', minute: '2-digit', hour12: false };
-  const currentTime: string = time.toLocaleTimeString('en-US', options);
-
   const days: string[] = ['Chủ Nhật', 'Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy'];
   const day: string = days[time.getDay()];
 
@@ -23,11 +20,22 @@ const ClockWidget = () => {
   const currentDayInWeek: string = `${day}`;
   const currentDate: string = `${time.getDate()}.${month}.${time.getFullYear()}`;
 
+  // Get the current hours, minutes, and seconds
+  const currentHour: string = String(time.getHours()).padStart(2, '0');
+  const currentMinutes: string = String(time.getMinutes()).padStart(2, '0');
+  const currentSeconds: string = String(time.getSeconds()).padStart(2, '0');
+
   return (
     <div className="flex flex-col items-center justify-center h-full bg-vtv-green rounded-3xl text-white">
-      <div className="text-2xl font-regular mb-1">{currentDayInWeek}</div>
-      <div className="text-6xl font-bold">{currentTime}</div>
-      <div className="text-2xl font-regular mt-1">{currentDate}</div>
+      <div className="text-2xl font-regular mb-1 hidden desktop:block">{currentDayInWeek}</div>
+      <div className="text-6xl font-bold hidden desktop:block">
+        {currentHour}:{currentMinutes}
+      </div>
+      <div className="text-6xl font-bold desktop:hidden">
+        <div>{currentHour}</div>
+        <div>{currentMinutes}</div>
+      </div>
+      <div className="text-base desktop:text-2xl font-regular mt-1">{currentDate}</div>
     </div>
   );
 }

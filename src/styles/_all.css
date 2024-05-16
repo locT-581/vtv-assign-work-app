@@ -19,10 +19,6 @@ body {
   box-sizing: border-box;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
 
 .logosidebar {
   height: 32px;
@@ -66,7 +62,6 @@ ul {
 }
 
 .sidebar ul li {
-  padding: 21px 0;
   color: #2d3581;
   cursor: pointer;
   font-weight: 600;
