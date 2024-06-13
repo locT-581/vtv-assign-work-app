@@ -33,7 +33,10 @@ export default function Login() {
   return (
     <div
       className="bg-cover h-screen w-screen items-center justify-center flex"
-      style={{ backgroundImage: "url('/src/assets/img/BG-TD.jpg')" }}
+      style={{
+        backgroundImage:
+          "url('https://firebasestorage.googleapis.com/v0/b/vtv-app-e0209.appspot.com/o/assets%2FBG-TD.jpg?alt=media&token=da8627cb-e201-4714-a10a-fd88c4724fba')",
+      }}
     >
       <div className="justify-center flex flex-col text-center min-w-[350px] w-1/4">
         <img src={getIcon('logoVTV')} alt="logo" className=" h-24 px-4" />

@@ -6,7 +6,7 @@ const Slider: React.FC<{ images: string[] }> = ({ images }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       goToNextSlide();
-    }, 5000); // Thay đổi mỗi 5 giây 
+    }, 5000); // Thay đổi mỗi 5 giây
 
     return () => {
       clearInterval(interval);
@@ -35,11 +35,11 @@ const Slider: React.FC<{ images: string[] }> = ({ images }) => {
 
 const PictureWidget: React.FC = () => {
   const images = [
-    '/src/assets/img/1.jpeg', 
-    '/src/assets/img/2.jpeg', 
-    '/src/assets/img/3.jpg',
-    '/src/assets/img/4.jpg'
-];
+    'https://firebasestorage.googleapis.com/v0/b/vtv-app-e0209.appspot.com/o/assets%2F1.jpeg?alt=media&token=5baf10fa-2563-4b8e-9b90-e8497e6412e9',
+    'https://firebasestorage.googleapis.com/v0/b/vtv-app-e0209.appspot.com/o/assets%2F2.jpeg?alt=media&token=6cd12bf3-ccf0-4aba-b89c-2dd1f17caf27',
+    'https://firebasestorage.googleapis.com/v0/b/vtv-app-e0209.appspot.com/o/assets%2F3.jpg?alt=media&token=3e53e027-a44a-4ac7-b95a-78ab9dbdcd22',
+    'https://firebasestorage.googleapis.com/v0/b/vtv-app-e0209.appspot.com/o/assets%2F4.jpg?alt=media&token=b20a6b53-f2ca-4a3d-905c-dad830aea1e2',
+  ];
 
   return (
     <div className="w-full h-full ">
