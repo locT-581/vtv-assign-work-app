@@ -1,4 +1,3 @@
-import * as React from 'react';
 import TableList from '../TableList';
 import DefaultLayout from '../layouts/DefaultLayout';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';

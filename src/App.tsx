@@ -59,7 +59,6 @@ function App() {
           <Route path="/chi-tiet-yeu-cau/:id" element={<RequirementDetail />} />
 
           <Route path="/dang-nhap-lan-dau" element={<FirstLogin />} />
-
           <Route path="*" element={<div>Not found</div>} />
 
           <Route

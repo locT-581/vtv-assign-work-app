@@ -1,5 +1,4 @@
 import { User } from './user';
-import { Vehicle } from './vehicle.';
 
 export interface Requirement {
   id: string;
@@ -9,10 +8,22 @@ export interface Requirement {
   endDate: number;
   note?: string;
   supportTeams: SupportTeams[];
-  user: User | null | undefined;
+  user: string;
   status: RequirementStatus;
   reasonReject?: string;
-  vehicles?: Vehicle[];
+
+  vehicles?: {
+    type?: 'Xe taxi' | 'Xe cơ quan' | null;
+    cars?: string[];
+    drivers?: string[];
+  };
+  studioTechniques: { member: string[] } | null;
+  lightingTechniques: { quantity: number; member: string[] };
+  soundTechniques: { quantity: number; member: string[] };
+  filming: { quantity: number; member: string[] };
+  level: 'Cao' | 'Trung bình' | 'Thấp';
+
+  km: string;
 }
 
 export interface SupportTeams {
@@ -26,4 +37,4 @@ export interface Department {
   name: string;
 }
 
-export type RequirementStatus = 'Đang chờ' | 'Đã phân công' | 'Đã từ chối' | '';
+export type RequirementStatus = 'Đang chờ' | 'Đã phân công' | 'Đã từ chối' | 'Đã hoàn thành';

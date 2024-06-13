@@ -21,7 +21,8 @@ export default function Login() {
     }
   }, [user, navigate]);
 
-  const handleSignIn = async () => {
+  const handleSignIn = async (e: React.FormEvent) => {
+    e.preventDefault();
     if (!email || !password) return;
     login({ email, password }).then(() => navigate('/'));
   };
@@ -34,11 +35,11 @@ export default function Login() {
       className="bg-cover h-screen w-screen items-center justify-center flex"
       style={{ backgroundImage: "url('/src/assets/img/BG-TD.jpg')" }}
     >
-      <div className="justify-center flex flex-col text-center  w-1/4">
+      <div className="justify-center flex flex-col text-center min-w-[350px] w-1/4">
         <img src={getIcon('logoVTV')} alt="logo" className=" h-24 px-4" />
-        <form>
+        <form onSubmit={handleSignIn}>
           <div className="Card w-full p-8 mt-6">
-            <p className="text-4xl font-semibold text-3xl text-vtv-blue">Chào mừng!</p>
+            <p className=" font-semibold text-3xl text-vtv-blue">Chào mừng!</p>
             <p className="text-base">Phần mềm chấm công tác của đài truyền hình VTV</p>
             <div className="inputLogin">
               <div className="input">
@@ -56,7 +57,7 @@ export default function Login() {
                 />
               </div>
             </div>
-            <button type="button" onClick={handleSignIn} style={{ marginTop: '26px' }}>
+            <button type="submit" style={{ marginTop: '26px' }}>
               Đăng nhập
             </button>
           </div>

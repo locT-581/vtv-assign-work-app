@@ -1,24 +1,28 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useNavigate } from 'react-router-dom';
 import DefaultLayout from '../layouts/DefaultLayout';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { useEffect, useState } from 'react';
-import { createRequirement, getAllSupportTeams, getCities } from '../../apis/userAPI';
+import { createRequirement, getCities } from '../../apis/userAPI';
 import { Province } from '../../types/common';
-import { Requirement, SupportTeams } from '../../types/requirement';
+import { Requirement } from '../../types/requirement';
 import { Checkbox } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { useAppSelector } from '../../redux/hook';
+import { useAppDispatch, useAppSelector } from '../../redux/hook';
+
+import Select from 'react-select';
+import { getAllRequirementAsync } from '../../redux/reducers/requirementSlice';
 
 export interface IAddRequirementProps {}
 
 export default function AddRequirement() {
-  const { user } = useAppSelector((state) => state.userSlice);
   const navigate = useNavigate();
-  const [cities, setCities] = useState<Province[]>([]);
-  // const [districts, setDistricts] = useState<District[]>([]);
-  const [showPopup, setShowPopup] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
 
-  const [supportTeams, setSupportTeams] = useState<SupportTeams[]>([]);
+  const { user } = useAppSelector((state) => state.userSlice);
+
+  const [cities, setCities] = useState<Province[]>([]);
+  const [showPopup, setShowPopup] = useState<boolean>(false);
 
   const [form, setForm] = useState<Requirement>({
     id: '',
@@ -28,8 +32,15 @@ export default function AddRequirement() {
     endDate: new Date().getTime(),
     note: '',
     supportTeams: [],
-    user,
-    status: '',
+    user: user?.id ?? '',
+    status: 'Đang chờ',
+    filming: { quantity: 0, member: [''] },
+    lightingTechniques: { quantity: 0, member: [''] },
+    vehicles: undefined,
+    soundTechniques: { quantity: 0, member: [''] },
+    studioTechniques: null,
+    level: 'Thấp',
+    km: '',
   });
 
   useEffect(() => {
@@ -46,10 +57,6 @@ export default function AddRequirement() {
         });
         setCities([{ province_id: '00', province_name: 'Chọn tỉnh/thành phố', province_type: '' }, ...data]);
       });
-
-      await getAllSupportTeams().then((data) => {
-        setSupportTeams(data);
-      });
     })();
   }, []);
 
@@ -63,28 +70,21 @@ export default function AddRequirement() {
     console.log(form);
   }, [form]);
 
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = e.target;
-    if (checked) {
-      setForm({ ...form, supportTeams: [...form.supportTeams, { id: name, team: name }] });
-    } else {
-      setForm({ ...form, supportTeams: form.supportTeams.filter((team) => team.id !== name) });
-    }
-  };
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     createRequirement({
       ...form,
-      user,
+      user: user?.id ?? '',
       startDate: new Date(form.startDate).getTime(),
       endDate: new Date(form.endDate).getTime(),
       status: 'Đang chờ',
     }).then(() => {
       setShowPopup(true);
-      // reset form
+      dispatch(getAllRequirementAsync({ userId: user?.id ?? '' }));
+      // reset
       setForm({
+        level: 'Thấp',
         id: '',
         title: '',
         address: '',
@@ -92,26 +92,21 @@ export default function AddRequirement() {
         endDate: new Date().getTime(),
         note: '',
         supportTeams: [],
-        user,
-        status: '',
+        user: user?.id ?? '',
+        status: 'Đang chờ',
+        filming: { quantity: 0, member: [''] },
+        lightingTechniques: { quantity: 0, member: [''] },
+        vehicles: undefined,
+        soundTechniques: { quantity: 0, member: [''] },
+        studioTechniques: null,
+        km: '',
       });
-      // reset support teams
+
       const checkboxes = document.querySelectorAll('.supportTeam') as NodeListOf<HTMLInputElement>;
       checkboxes.forEach((checkbox) => {
         checkbox.checked = false;
       });
     });
-  };
-
-  const handleAddVehicle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { checked } = e.target;
-    if (checked) {
-      setForm({ ...form, vehicles: [] });
-    } else {
-      const { vehicles, ...tempForm } = form;
-      console.log('🚀 ~ handleAddVehicle ~ vehicles:', vehicles);
-      setForm({ ...tempForm });
-    }
   };
 
   useEffect(() => {
@@ -134,7 +129,10 @@ export default function AddRequirement() {
             <h2 className="text-[#2D3581] text-3xl font-bold">Thông báo</h2>
             <p className="text-[#999999] text-xl font-semibold">Bạn đã gửi yêu cầu thành công</p>
             <button
-              onClick={() => setShowPopup(false)}
+              onClick={() => {
+                setShowPopup(false);
+                navigate(-1);
+              }}
               type="button"
               className="text-white bg-[#2D3581] rounded-full !py-1 !px-6 float-right"
             >
@@ -198,17 +196,6 @@ export default function AddRequirement() {
                 </option>
               ))}
             </select>
-            {/* <select
-              defaultValue=""
-              id="address"
-              className="cursor-pointer !bg-transparent !border !border-[#D9DBE9] max-w-[300px] rounded-lg py-1 px-4  text-black"
-            >
-              {cities.map((city) => (
-                <option key={city.province_id} value={city.province_id}>
-                  {city.province_name}
-                </option>
-              ))}
-            </select> */}
           </div>
           <div className="flex items-center gap-10">
             <div className="flex items-center gap-2">
@@ -241,6 +228,19 @@ export default function AddRequirement() {
                 className="text-black cursor-pointer !bg-transparent max-w-[200px] w-full border border-[#D9DBE9] rounded-lg py-1 px-4 mt-1"
               />
             </div>
+            <div className="flex items-center gap-2">
+              <label className="text-lg font-medium text-black flex flex-shrink-0">Số km</label>
+              <input
+                value={form.km}
+                onChange={(e) => {
+                  const { value } = e.target;
+                  Number(value) < 0 && setForm({ ...form, km: '0' });
+                  setForm({ ...form, km: value });
+                }}
+                type="number"
+                className="text-black !bg-transparent w-full border border-[#D9DBE9] rounded-lg py-1 px-4 mt-1"
+              />
+            </div>
           </div>
           <div>
             <label htmlFor="note" className="text-lg font-medium text-black flex flex-shrink-0">
@@ -260,19 +260,124 @@ export default function AddRequirement() {
             <p className="text-[#2D3581] text-base">
               Vui lòng đánh dấu vào các tùy chọn dưới đây nếu bạn cần sự hỗ trợ từ bất kỳ đội nào.
             </p>
-            <div className="w-3/4 min-w-[400px] flex gap-x-[5vw] flex-wrap  ">
-              {supportTeams.map((team) => (
-                <div key={team.id} className="flex items-center gap-2 cursor-pointer">
-                  <Checkbox className="supportTeam" onChange={handleCheckboxChange} id={team.id} name={team.id} />
-                  <label htmlFor={team.id} className="text-black flex-shrink-0 text-lg font-medium cursor-pointer">
-                    {team.team}
-                  </label>
-                </div>
-              ))}
-              <div className="flex items-center gap-2 cursor-pointer">
-                <Checkbox className="vehicles" onChange={handleAddVehicle} id="vehicles" name="vehicles" />
-                <label htmlFor="vehicles" className="text-black flex-shrink-0 text-lg font-medium cursor-pointer">
-                  Phương tiện di chuyển
+            <div className="w-3/4 min-w-[400px] flex gap-x-[5vw] flex-wrap gap-y-4 ">
+              <div className="flex gap-2 items-center">
+                <div className="text-lg font-medium">Quay phim</div>
+                <Select
+                  onChange={(e: any) =>
+                    setForm({
+                      ...form,
+                      filming: { quantity: Number(e.value), member: Array.from({ length: Number(e.value) }, () => '') },
+                    })
+                  }
+                  placeholder="0-12"
+                  styles={customStyles(false)}
+                  options={[
+                    { value: 0, label: '0' },
+                    { value: 1, label: '1' },
+                    { value: 2, label: '2' },
+                    { value: 3, label: '3' },
+                    { value: 4, label: '4' },
+                    { value: 5, label: '5' },
+                    { value: 6, label: '6' },
+                    { value: 7, label: '7' },
+                    { value: 8, label: '8' },
+                    { value: 9, label: '9' },
+                    { value: 10, label: '10' },
+                    { value: 11, label: '11' },
+                    { value: 12, label: '12' },
+                  ]}
+                />
+              </div>
+
+              <div className="flex gap-2 items-center">
+                <div className="text-lg font-medium">Ánh sáng</div>
+                <Select
+                  onChange={(e: any) =>
+                    setForm({
+                      ...form,
+                      lightingTechniques: {
+                        quantity: Number(e.value),
+                        member: Array.from({ length: Number(e.value) }, () => ''),
+                      },
+                    })
+                  }
+                  placeholder="0-2"
+                  styles={customStyles(false)}
+                  options={[
+                    { value: 0, label: '0' },
+                    { value: 1, label: '1' },
+                    { value: 2, label: '2' },
+                  ]}
+                />
+              </div>
+
+              <div className="flex gap-2 items-center">
+                <div className="text-lg font-medium">Âm thanh</div>
+                <Select
+                  onChange={(e: any) =>
+                    setForm({
+                      ...form,
+                      soundTechniques: {
+                        quantity: Number(e.value),
+                        member: Array.from({ length: Number(e.value) }, () => ''),
+                      },
+                    })
+                  }
+                  placeholder="0-2"
+                  styles={customStyles(false)}
+                  options={[
+                    { value: 0, label: '0' },
+                    { value: 1, label: '1' },
+                    { value: 2, label: '2' },
+                  ]}
+                />
+              </div>
+
+              <div className="flex gap-2 items-center">
+                <div className="text-lg font-medium">Phương tiện di chuyển</div>
+                <Select
+                  onChange={(e: any) =>
+                    setForm({
+                      ...form,
+                      vehicles: e.value === 'Xe taxi' ? { type: 'Xe taxi' } : { type: 'Xe cơ quan', cars: [] },
+                    })
+                  }
+                  placeholder="Chọn loại xe"
+                  styles={customStyles(false)}
+                  options={[
+                    { value: 'Xe taxi', label: 'Xe taxi' },
+                    { value: 'Xe cơ quan', label: 'Xe cơ quan' },
+                  ]}
+                />
+              </div>
+
+              <div className="flex gap-2 items-center">
+                <div className="text-lg font-medium">Mức độ</div>
+                <Select
+                  onChange={(e: any) => setForm({ ...form, level: e.value })}
+                  placeholder="Chọn mức độ "
+                  styles={customStyles(false)}
+                  options={[
+                    { value: 'Cao', label: 'Cao' },
+                    { value: 'Trung bình', label: 'Trung bình' },
+                    { value: 'Thấp', label: 'Thấp' },
+                  ]}
+                />
+              </div>
+
+              <div className="flex items-center gap-1 cursor-pointer">
+                <Checkbox
+                  className="supportTeam select-none"
+                  onChange={(e) => setForm({ ...form, studioTechniques: e.target.checked ? { member: [''] } : null })}
+                  id="studioTechniques"
+                  name="studioTechniques"
+                />
+                <label
+                  htmlFor="studioTechniques"
+                  className="text-black flex-shrink-0 text-lg font-medium cursor-pointer"
+                >
+                  Kỹ thuật trường quay
                 </label>
               </div>
             </div>
@@ -292,3 +397,57 @@ export default function AddRequirement() {
     </DefaultLayout>
   );
 }
+
+const customStyles = (isDarkMode: boolean) => ({
+  control: (styles: any) => ({
+    ...styles,
+    backgroundColor: isDarkMode ? '#141416' : '#F7F9FB',
+    color: isDarkMode ? '#fff' : '#F7F9FB',
+    padding: '0',
+    borderRadius: '12px',
+    outline: 'none',
+    '&:placeholder': {
+      color: isDarkMode ? '#636363' : '#D1D1D1',
+    },
+    cursor: 'pointer',
+    borderColor: isDarkMode ? '#141416' : '#D1D1D1',
+    boxShadow: 'none',
+    '&:hover': {
+      boxShadow: 'none',
+    },
+  }),
+  singleValue: (styles: any) => ({
+    ...styles,
+    color: isDarkMode ? '#fff' : '#000',
+    outline: 'none',
+    padding: 0,
+  }),
+  menu: (styles: any) => ({
+    ...styles,
+    backgroundColor: isDarkMode ? '#333' : '#fff',
+    outline: 'none',
+  }),
+  option: (styles: any, { isFocused }: any) => ({
+    ...styles,
+    backgroundColor: isFocused ? (isDarkMode ? '#555' : '#eee') : isDarkMode ? '#333' : '#fff',
+    color: isDarkMode ? '#fff' : '#000',
+    outline: 'none',
+  }),
+  dropdownIndicator: (styles: any) => ({
+    ...styles,
+    color: isDarkMode ? '#fff' : '#000',
+    outline: 'none',
+  }),
+  indicatorSeparator: (styles: any) => ({
+    ...styles,
+    display: 'none',
+  }),
+  input: (styles: any) => ({
+    ...styles,
+    outline: 'none',
+    boxShadow: 'none',
+    '&:focus': {
+      boxShadow: 'none',
+    },
+  }),
+});

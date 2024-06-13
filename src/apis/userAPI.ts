@@ -18,7 +18,7 @@ import {
 
 import { auth, db, storage } from '../configs/firebase';
 import { User } from '../types/user';
-import { Department, Requirement, SupportTeams } from '../types/requirement';
+import { Department, Requirement } from '../types/requirement';
 import axios from 'axios';
 import { District, Province } from '../types/common';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
@@ -87,7 +87,7 @@ export const getAllRequirement = async ({ userId }: { userId: string | null }): 
         return [];
       });
   } else {
-    const queryRequirement = query(requirementRef, where('user.id', '==', userId), orderBy('createdAt', 'desc'));
+    const queryRequirement = query(requirementRef, where('user', '==', userId), orderBy('createdAt', 'desc'));
     await getDocs(queryRequirement)
       .then((querySnapshot) => {
         console.log(querySnapshot);
@@ -140,28 +140,6 @@ export const getDistricts = async (provinceId: string): Promise<District[]> => {
   } catch (error) {
     throw new Error(error + '' || 'Error getting districts');
   }
-};
-
-/**
- * Get all support teams from firestore
- * @returns {Promise} - Promise<SupportTeams[]>
- *
- */
-export const getAllSupportTeams = async (): Promise<SupportTeams[]> => {
-  // Get all support teams from firestore
-  const supportTeams: SupportTeams[] = [];
-  const supportTeamsRef = collection(db, 'support-teams');
-  await getDocs(supportTeamsRef)
-    .then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        supportTeams.push({ id: doc.id, team: doc.data().name });
-      });
-    })
-    .catch((error) => {
-      console.log('Error getting documents: ', error);
-      return [];
-    });
-  return supportTeams;
 };
 
 /**
@@ -278,15 +256,17 @@ export const getAllUsers = async (): Promise<User[] | null> => {
   await getDocs(query(usersRef, orderBy('createAt', 'desc')))
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        const { createdAt, ...tempUser } = doc.data();
-        console.log('🚀 ~ querySnapshot.forEach ~ createdAt:', createdAt);
-        users.push({ id: doc.id, ...tempUser } as User);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        console.log('🚀 ~ querySnapshot.forEach ~ createdAt:', doc.id);
+        users.push({ ...doc.data(), id: doc.id } as User);
+        console.log('🚀 ~ querySnapshot.forEach ~ users:', users);
       });
     })
     .catch((error) => {
       console.log('Error getting documents: ', error);
       return [];
     });
+  console.log('🚀 ~ getAllUsers ~ users:', users);
   return users;
 };
 

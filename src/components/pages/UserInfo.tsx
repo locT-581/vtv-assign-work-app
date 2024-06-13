@@ -112,7 +112,9 @@ export default function UserInfo() {
 
         <div className="flex w-full justify-between items-center">
           <div className="flex flex-col gap-4 mt-12">
-            <h2 className="w-full text-start text-2xl laptop:text-4xl desktop:text-6xl text-[#2D3581] font-semibold">Thông tin tài khoản</h2>
+            <h2 className="w-full text-start text-2xl laptop:text-4xl desktop:text-6xl text-[#2D3581] font-semibold">
+              Thông tin tài khoản
+            </h2>
             <span className="text-xs text-[#999999]">*Email sẽ không được phép thay đổi</span>
           </div>
           <div
@@ -138,7 +140,7 @@ export default function UserInfo() {
               <CameraAltIcon color="inherit" fontSize="small" />
             </div>
           </div>
-        </div>    
+        </div>
         <form onSubmit={handleSubmit} className="flex flex-col gap-6 pb-10 mt-2">
           <div className="flex gap-4 items-center">
             <label htmlFor="fullName" className="text-lg font-medium text-black flex flex-shrink-0">
@@ -238,13 +240,12 @@ export default function UserInfo() {
               className="text-black !bg-transparent w-full border border-[#D9DBE9] rounded-lg py-1 px-4 mt-1"
             />
           </div>
-
         </form>
-          <div className="w-full py-4">
-            <button type="submit" className=" w-fit text-white bg-[#2D3581] rounded-full !py-1 !px-6 float-right">
-              Cập nhật
-            </button>
-          </div>
+        <div className="w-full py-4">
+          <button type="submit" className=" w-fit text-white bg-[#2D3581] rounded-full !py-1 !px-6 float-right">
+            Cập nhật
+          </button>
+        </div>
       </div>
     </DefaultLayout>
   );

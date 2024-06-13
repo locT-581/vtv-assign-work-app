@@ -16,6 +16,7 @@ const UserSidebar = () => {
       .then(() => {
         console.log('Sign Out');
         navigate('/dang-nhap');
+        window.location.reload();
       })
       .catch((error) => console.log(error));
   };
@@ -55,11 +56,12 @@ const UserSidebar = () => {
               <h2 className="hidden desktop:block text-xl">Lịch trình sắp tới</h2>
             </Link>
           </li>
-
         </ul>
         <div className="mt-auto flex justify-center">
-          <button onClick={handleSignOut} className="hidden desktop:block">Đăng xuất</button>
-          <FaSignOutAlt onClick={handleSignOut} className="desktop:hidden"/>
+          <button onClick={handleSignOut} className="hidden desktop:block">
+            Đăng xuất
+          </button>
+          <FaSignOutAlt onClick={handleSignOut} className="desktop:hidden" />
         </div>
         <div>
           <h6>VTVapp v1.0</h6>

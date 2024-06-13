@@ -117,7 +117,7 @@ const WeatherWidget: React.FC = () => {
               <p>Độ ẩm</p>
             </div>
             <div className="flex justify-center">
-              <p className="text-6xl">{weatherData.main.humidity}</p>
+              <p className="text-6xl">{weatherData?.main.humidity}</p>
               <p className="text-l justify-end">%</p>
             </div>
           </div>
@@ -127,7 +127,7 @@ const WeatherWidget: React.FC = () => {
               <p className="hidden desktop:block">Gió</p>
             </div>
             <div className="flex justify-center items-center">
-              <p className="text-xl desktop:text-6xl">{weatherData.wind.speed.toFixed(1)}</p>
+              <p className="text-xl desktop:text-6xl">{weatherData?.wind.speed.toFixed(1)}</p>
               <p className="text-l ml-2">km/h</p>
             </div>
           </div>

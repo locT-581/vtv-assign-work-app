@@ -37,7 +37,13 @@ export default function App() {
   }, [requirements, page]);
 
   useEffect(() => {
-    if (!requirements && user) dispatch(getAllRequirementAsync({ userId: user?.id }));
+    if (user) {
+      if (user.isAdmin) {
+        !requirements && dispatch(getAllRequirementAsync({ userId: null }));
+      } else {
+        !requirements && dispatch(getAllRequirementAsync({ userId: user?.id ?? '' }));
+      }
+    }
     (async () => {
       await getCities().then((data) => {
         // Check if data element have province_name field include 'Tỉnh' or 'Thành phố' then remove this word

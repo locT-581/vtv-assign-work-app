@@ -17,7 +17,7 @@ import CameraAltIcon from '@mui/icons-material/CameraAlt';
 
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
-const itemPerPage = 6;
+const itemPerPage = 4;
 
 type PopupType = 'warning' | 'success';
 
@@ -27,8 +27,8 @@ export default function VehicleList() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const [showRemoveButton, setShowRemoveButton]= useState(false)
-  const [showEditButton, setShowEditButton]= useState(false)
+  const [showRemoveButton, setShowRemoveButton] = useState(false);
+  const [showEditButton, setShowEditButton] = useState(false);
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [popupType, setPopupType] = useState<PopupType>('warning');
   const [currentVehicleToRemove, setCurrentVehicleToRemove] = useState<string | null>(null);
@@ -40,16 +40,16 @@ export default function VehicleList() {
   const [vehiclePerPage, setVehiclePerPage] = useState<Vehicle[]>([]);
 
   const handleShowRemoveButton = () => {
-    setShowRemoveButton(true)
-  }
+    setShowRemoveButton(true);
+  };
   const handleShowEditButton = () => {
-    setShowEditButton(true)
-  }
+    setShowEditButton(true);
+  };
 
   const handelCancel = () => {
-    setShowRemoveButton(false)
-    setShowEditButton(false)
-  }
+    setShowRemoveButton(false);
+    setShowEditButton(false);
+  };
 
   useEffect(() => {
     const start = (page - 1) * itemPerPage;
@@ -174,7 +174,7 @@ export default function VehicleList() {
                     <p>Xoá</p>
                   </button>
                 </div>
-              ):(
+              ) : (
                 <button className="flex gap-1  items-center !py-2" type="button" onClick={handelCancel}>
                   <p>Huỷ</p>
                 </button>
@@ -203,47 +203,47 @@ export default function VehicleList() {
                         {vehicle?.status}
                       </div>
                       {showEditButton || showRemoveButton ? (
-                          <div className="flex gap-4 ml-12">
-                            {showEditButton ? (
-                              <p
-                                onClick={() => {
-                                  dispatch(
-                                    switchPopup({
-                                      isShowPopup: true,
-                                      popupElement: (
-                                        <AddVehiclePopup
-                                          onSuccess={() => {
-                                            getAllVehicle().then((data) => {
-                                              setAllVehicle(data ?? []);
-                                            });
-                                          }}
-                                          vehicle={allVehicle.find((veh) => veh.id === vehicle.id)}
-                                        />
-                                      ),
-                                    }),
-                                  );
-                                  setCurrentVehicleToRemove(vehicle.id);
-                                }}
-                                className="flex text-vtv-blue cursor-pointer"
-                              >
-                                Sửa
-                              </p>
-                            ):null}
-                            {showRemoveButton ? (
-                              <p
-                                onClick={() => {
-                                  setPopupType('warning');
-                                  setShowPopup(true);
-                                  setCurrentVehicleToRemove(vehicle.id);
-                                }}
-                                className="flex text-vtv-red cursor-pointer"
-                              >
-                                Xóa
-                              </p>
-                            ):null}
-                          </div>
-                      ):null}
-                      </div>
+                        <div className="flex gap-4 ml-12">
+                          {showEditButton ? (
+                            <p
+                              onClick={() => {
+                                dispatch(
+                                  switchPopup({
+                                    isShowPopup: true,
+                                    popupElement: (
+                                      <AddVehiclePopup
+                                        onSuccess={() => {
+                                          getAllVehicle().then((data) => {
+                                            setAllVehicle(data ?? []);
+                                          });
+                                        }}
+                                        vehicle={allVehicle.find((veh) => veh.id === vehicle.id)}
+                                      />
+                                    ),
+                                  }),
+                                );
+                                setCurrentVehicleToRemove(vehicle.id);
+                              }}
+                              className="flex text-vtv-blue cursor-pointer"
+                            >
+                              Sửa
+                            </p>
+                          ) : null}
+                          {showRemoveButton ? (
+                            <p
+                              onClick={() => {
+                                setPopupType('warning');
+                                setShowPopup(true);
+                                setCurrentVehicleToRemove(vehicle.id);
+                              }}
+                              className="flex text-vtv-red cursor-pointer"
+                            >
+                              Xóa
+                            </p>
+                          ) : null}
+                        </div>
+                      ) : null}
+                    </div>
                   </div>
                 </RowItem>
               ))}

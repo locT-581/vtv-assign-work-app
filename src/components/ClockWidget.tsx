@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 const ClockWidget = () => {
   const [time, setTime] = useState<Date>(new Date());
@@ -23,7 +23,7 @@ const ClockWidget = () => {
   // Get the current hours, minutes, and seconds
   const currentHour: string = String(time.getHours()).padStart(2, '0');
   const currentMinutes: string = String(time.getMinutes()).padStart(2, '0');
-  const currentSeconds: string = String(time.getSeconds()).padStart(2, '0');
+  // const currentSeconds: string = String(time.getSeconds()).padStart(2, '0');
 
   return (
     <div className="flex flex-col items-center justify-center h-full bg-vtv-green rounded-3xl text-white">
@@ -38,6 +38,6 @@ const ClockWidget = () => {
       <div className="text-base desktop:text-2xl font-regular mt-1">{currentDate}</div>
     </div>
   );
-}
+};
 
 export default ClockWidget;

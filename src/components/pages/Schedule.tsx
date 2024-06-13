@@ -13,8 +13,13 @@ export default function Schedule() {
   const dispatch = useAppDispatch();
 
   React.useEffect(() => {
-    if (user && !requirements) dispatch(getAllRequirementAsync({ userId: null }));
-
+    if (user) {
+      if (user?.isAdmin && !requirements) {
+        dispatch(getAllRequirementAsync({ userId: null }));
+      } else if (!user?.isAdmin && !requirements) {
+        dispatch(getAllRequirementAsync({ userId: user?.id }));
+      }
+    }
     return () => {
       dispatch(switchPopup({ isShowPopup: false, popupElement: null }));
     };

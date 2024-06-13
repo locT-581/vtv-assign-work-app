@@ -10,4 +10,5 @@ export interface User {
   avatar?: string;
   color?: string;
   firstLogin?: boolean;
+  // status: 'rảnh' | 'bận';
 }

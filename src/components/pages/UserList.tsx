@@ -15,7 +15,7 @@ import { switchPopup } from '../../redux/reducers/commonSlice';
 import ErrorIcon from '@mui/icons-material/Error';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
-const itemPerPage = 6;
+const itemPerPage = 4;
 
 type PopupType = 'warning' | 'success';
 
@@ -28,7 +28,7 @@ export default function UserList() {
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [popupType, setPopupType] = useState<PopupType>('warning');
   const [currentUserToRemove, setCurrentUserToRemove] = useState<string | null>(null);
-  const [showRemoveButton, setShowRemoveButton]= useState(false)
+  const [showRemoveButton, setShowRemoveButton] = useState(false);
 
   const [allUsers, setAllUsers] = useState<User[]>([]);
 
@@ -58,12 +58,12 @@ export default function UserList() {
   }, []);
 
   const handleShowRemoveButton = () => {
-    setShowRemoveButton(true)
-  }
+    setShowRemoveButton(true);
+  };
 
   const handelCancel = () => {
-    setShowRemoveButton(false)
-  }
+    setShowRemoveButton(false);
+  };
 
   const handleAddUser = () => {
     dispatch(switchPopup({ isShowPopup: true, popupElement: <AddUserPopup /> }));
@@ -144,13 +144,13 @@ export default function UserList() {
                 <p>Thêm</p>
               </button>
               {!showRemoveButton ? (
-              <button className="flex gap-1 items-center !py-2" type="button" onClick={handleShowRemoveButton}>
-                <p>Xoá</p>
-              </button>
-              ):(
-              <button className="flex gap-1 items-center !py-2" type="button" onClick={handelCancel}>
-              <p>Huỷ</p>
-              </button>
+                <button className="flex gap-1 items-center !py-2" type="button" onClick={handleShowRemoveButton}>
+                  <p>Xoá</p>
+                </button>
+              ) : (
+                <button className="flex gap-1 items-center !py-2" type="button" onClick={handelCancel}>
+                  <p>Huỷ</p>
+                </button>
               )}
             </div>
           </div>
@@ -173,17 +173,17 @@ export default function UserList() {
                     </div>
                     <div>
                       {showRemoveButton ? (
-                          <p
-                            onClick={() => {
-                              setPopupType('warning');
-                              setShowPopup(true);
-                              setCurrentUserToRemove(user.id);
-                            }}
-                            className="flex text-vtv-red cursor-pointer"
-                          >
-                            Xóa
-                          </p>
-                      ):null}
+                        <p
+                          onClick={() => {
+                            setPopupType('warning');
+                            setShowPopup(true);
+                            setCurrentUserToRemove(user.id);
+                          }}
+                          className="flex text-vtv-red cursor-pointer"
+                        >
+                          Xóa
+                        </p>
+                      ) : null}
                     </div>
                   </div>
                 </RowItem>
@@ -221,6 +221,7 @@ const AddUserPopup = () => {
     phoneNumber: '',
     address: '',
     department: '',
+    // status: 'rảnh',
   });
 
   useEffect(() => {
@@ -233,6 +234,7 @@ const AddUserPopup = () => {
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    console.log('🚀 ~ handleChange ~ e:', e.target.value);
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   };
@@ -310,20 +312,7 @@ const AddUserPopup = () => {
               className="text-black !bg-transparent w-full border border-[#D9DBE9] rounded-lg py-1 px-4 mt-1"
             />
           </div>
-          {/* <div className="flex gap-4 items-center">
-        <label htmlFor="password" className="text-lg font-medium text-black flex flex-shrink-0">
-          Mật khẩu
-        </label>
-        <input
-          required
-          title=""
-          value={form.password}
-          id="password"
-          name="password"
-          type="password"
-          className="text-black !bg-transparent w-full border border-[#D9DBE9] rounded-lg py-1 px-4 mt-1"
-        />
-      </div> */}
+
           <div className="flex gap-10">
             <div className="flex gap-4 items-center">
               <label htmlFor="phoneNumber" className="text-lg font-medium text-black flex flex-shrink-0">
@@ -350,7 +339,7 @@ const AddUserPopup = () => {
                 required
                 title=""
                 onChange={handleChange}
-                value={form.address}
+                value={form.department}
                 name="department"
                 id="department"
                 className="cursor-pointer !bg-transparent max-w-[300px] !border !border-[#D9DBE9] rounded-lg py-1 px-4  text-black"
