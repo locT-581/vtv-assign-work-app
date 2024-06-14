@@ -201,7 +201,10 @@ export default function RequirementDetail() {
             </div>
           )}
           {popupType === 'error' && (
-            <div className="bg-white rounded-3xl flex flex-col justify-center items-center gap-2 text-center p-9 shadow-md">
+            <div className="relative bg-white rounded-3xl flex flex-col justify-center items-center gap-2 text-center p-9 shadow-md">
+              <div className="absolute right-5 top-3 tex-3xl cursor-pointer " onClick={() => setShowPopup(false)}>
+                x
+              </div>
               <ErrorIcon color="error" />
               <h2 className="text-[#2D3581] text-3xl font-bold">HUỶ YÊU CẦU</h2>
               <p className="text-[#999999] text-base font-medium">
