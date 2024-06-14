@@ -24,6 +24,7 @@ const UserInfo = lazy(() => import('./components/pages/UserInfo'));
 const FirstLogin = lazy(() => import('./components/pages/FirstLogin'));
 
 const Schedule = lazy(() => import('./components/pages/Schedule'));
+
 import VehicleList from './components/pages/VehicleList';
 
 function App() {
@@ -53,7 +54,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/dang-nhap" element={<Login />} />
           <Route path="/yeu-cau-cua-toi" element={<MyRequirements />} />
-          {/* <Route path="/lich-trinh" element={<Schedule />} /> */}
+          <Route path="/lich-trinh" element={<Schedule />} />
           <Route path="/tao-yeu-cau-moi" element={<AddRequirement />} />
           <Route path="/thong-tin-tai-khoan" element={<UserInfo />} />
           <Route path="/chi-tiet-yeu-cau/:id" element={<RequirementDetail />} />
@@ -78,14 +79,14 @@ function App() {
             }
           />
 
-          <Route
+          {/* <Route
             path="/lich-trinh"
             element={
               <PrivateRoute>
                 <Schedule />
               </PrivateRoute>
             }
-          />
+          /> */}
           <Route
             path="/quan-ly-phuong-tien"
             element={
